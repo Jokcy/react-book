@@ -1,0 +1,54 @@
+#cs-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+#cs-footer * {
+  color: #666;
+}
+
+#cs-footer a {
+  text-decoration: underline;
+  color: #555;
+}
+
+#disqus_thread {
+  padding: 0 40px;
+}
+
+.body-inner .page-wrapper {
+  padding-bottom: 20px;
+}
+
+.buttondown-form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.buttondown-form label {
+  font-weight: 900;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.buttondown-form input {
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  display: block;
+  border-radius: 3px;
+  border: 1px solid #aaa;
+}
+
+.buttondown-form button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 6px 10px;
+  color: #fff;
+  background-color: #0069ff;
+  border-width: 0;
+  border-radius: 3px;
+}

@@ -1,0 +1,1490 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>react-scheduler · React源码解析</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+         
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="perform-work.html" />
+    
+    
+    <link rel="prev" href="schedule-work.html" />
+    
+
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=UA-49483742-5"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || []
+  function gtag() {
+    dataLayer.push(arguments)
+  }
+  gtag('js', new Date())
+
+  gtag('config', 'UA-49483742-5')
+</script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    <li>
+        <a href="https://vue3.w2deep.com" target="_blank" class="custom-link" style="background: #3eaf7c; color: #efefef; margin-top: -10px;">新鲜的vue3源码解析</a>
+    </li>
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../api/react.html">
+            
+                <a href="../api/react.html">
+            
+                    
+                    React API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../api/react-element.html">
+            
+                <a href="../api/react-element.html">
+            
+                    
+                    ReactElement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../api/react-children.html">
+            
+                <a href="../api/react-children.html">
+            
+                    
+                    React Children
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../api/react-structure.html">
+            
+                <a href="../api/react-structure.html">
+            
+                    
+                    React 中的数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    创建更新
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../update/react-dom-render.html">
+            
+                <a href="../update/react-dom-render.html">
+            
+                    
+                    ReactDOM.render
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../update/set-state.html">
+            
+                <a href="../update/set-state.html">
+            
+                    
+                    setState & forceUpdate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../update/expiration-time.html">
+            
+                <a href="../update/expiration-time.html">
+            
+                    
+                    expirationTime 计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    任务调度
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="scheduler-global.html">
+            
+                <a href="scheduler-global.html">
+            
+                    
+                    全局变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="schedule-work.html">
+            
+                <a href="schedule-work.html">
+            
+                    
+                    scheduleWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.3" data-path="scheduler-pkg.html">
+            
+                <a href="scheduler-pkg.html">
+            
+                    
+                    react-scheduler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="perform-work.html">
+            
+                <a href="perform-work.html">
+            
+                    
+                    performWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="perform-unit-of-work.html">
+            
+                <a href="perform-unit-of-work.html">
+            
+                    
+                    performUnitOfWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="render-root.html">
+            
+                <a href="render-root.html">
+            
+                    
+                    renderRoot
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.6.1" data-path="render-root/throw-exception.html">
+            
+                <a href="render-root/throw-exception.html">
+            
+                    
+                    throwException
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="begin-work.html">
+            
+                <a href="begin-work.html">
+            
+                    
+                    beginWork
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.7.1" data-path="begin-work/mount-indeterminate-component.html">
+            
+                <a href="begin-work/mount-indeterminate-component.html">
+            
+                    
+                    mountIndeterminateComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.2" data-path="begin-work/mount-lazy-component.html">
+            
+                <a href="begin-work/mount-lazy-component.html">
+            
+                    
+                    mountLazyComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.3" data-path="begin-work/update-functional-component.html">
+            
+                <a href="begin-work/update-functional-component.html">
+            
+                    
+                    updateFunctionalComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.4" data-path="begin-work/update-class-component.html">
+            
+                <a href="begin-work/update-class-component.html">
+            
+                    
+                    updateClassComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.5" data-path="begin-work/update-host-root.html">
+            
+                <a href="begin-work/update-host-root.html">
+            
+                    
+                    updateHostRoot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.6" data-path="begin-work/update-host-component.html">
+            
+                <a href="begin-work/update-host-component.html">
+            
+                    
+                    updateHostComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.7" data-path="begin-work/update-host-text.html">
+            
+                <a href="begin-work/update-host-text.html">
+            
+                    
+                    updateHostText
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.8" data-path="../feature/Suspense-component.md">
+            
+                <span>
+            
+                    
+                    updateSuspenseComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.9" data-path="begin-work/update-portal-component.html">
+            
+                <a href="begin-work/update-portal-component.html">
+            
+                    
+                    updatePortalComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.10" data-path="begin-work/update-forward-ref.html">
+            
+                <a href="begin-work/update-forward-ref.html">
+            
+                    
+                    updateForwardRef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.11" data-path="begin-work/update-fragment.html">
+            
+                <a href="begin-work/update-fragment.html">
+            
+                    
+                    updateFragment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.12" data-path="begin-work/update-mode.html">
+            
+                <a href="begin-work/update-mode.html">
+            
+                    
+                    updateMode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.13" data-path="begin-work/update-profiler.html">
+            
+                <a href="begin-work/update-profiler.html">
+            
+                    
+                    updateProfiler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.14" data-path="begin-work/update-context-provider.html">
+            
+                <a href="begin-work/update-context-provider.html">
+            
+                    
+                    updateContextProvider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.15" data-path="begin-work/update-context-consumer.html">
+            
+                <a href="begin-work/update-context-consumer.html">
+            
+                    
+                    updateContextConsumer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="reconcile-children.html">
+            
+                <a href="reconcile-children.html">
+            
+                    
+                    reconcileChildren
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.8.1" data-path="reconcile-children/single.html">
+            
+                <a href="reconcile-children/single.html">
+            
+                    
+                    调和单个节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.2" data-path="reconcile-children/array.html">
+            
+                <a href="reconcile-children/array.html">
+            
+                    
+                    调和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    commit 阶段
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../commit-phase/commit-root.html">
+            
+                <a href="../commit-phase/commit-root.html">
+            
+                    
+                    commitRoot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../commit-phase/invokeGuardedCallback.html">
+            
+                <a href="../commit-phase/invokeGuardedCallback.html">
+            
+                    
+                    invokeGuardedCallback
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../commit-phase/commitBeforeMutationLifecycles.html">
+            
+                <a href="../commit-phase/commitBeforeMutationLifecycles.html">
+            
+                    
+                    commitBeforeMutationLifecycles
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../commit-phase/commit-all-host-effects.html">
+            
+                <a href="../commit-phase/commit-all-host-effects.html">
+            
+                    
+                    commitAllHostEffects
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.4.1" data-path="../commit-phase/host-effects/CommitPlacement.html">
+            
+                <a href="../commit-phase/host-effects/CommitPlacement.html">
+            
+                    
+                    commitPlacement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.2" data-path="../commit-phase/host-effects/CommitWork.html">
+            
+                <a href="../commit-phase/host-effects/CommitWork.html">
+            
+                    
+                    commitWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.3" data-path="../commit-phase/host-effects/CommitDeletion.html">
+            
+                <a href="../commit-phase/host-effects/CommitDeletion.html">
+            
+                    
+                    commitDeletion
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../commit-phase/commit-all-lifecycles.html">
+            
+                <a href="../commit-phase/commit-all-lifecycles.html">
+            
+                    
+                    commitAllLifecycle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    功能
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../features/context.html">
+            
+                <a href="../features/context.html">
+            
+                    
+                    context
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../features/hydrate.html">
+            
+                <a href="../features/hydrate.html">
+            
+                    
+                    hydrate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../features/ref.html">
+            
+                <a href="../features/ref.html">
+            
+                    
+                    ref
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../features/event-injection.html">
+            
+                <a href="../features/event-injection.html">
+            
+                    
+                    事件系统初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../features/event-bind.html">
+            
+                <a href="../features/event-bind.html">
+            
+                    
+                    事件绑定
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../features/event-dispatch.html">
+            
+                <a href="../features/event-dispatch.html">
+            
+                    
+                    事件触发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="../features/event-create-event-object.html">
+            
+                <a href="../features/event-create-event-object.html">
+            
+                    
+                    事件对象生成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="../features/Suspense-component.html">
+            
+                <a href="../features/Suspense-component.html">
+            
+                    
+                    Suspense
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="../features/suspense.html">
+            
+                <a href="../features/suspense.html">
+            
+                    
+                    挂起任务的含义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.10" data-path="../features/suspense-lazy.html">
+            
+                <a href="../features/suspense-lazy.html">
+            
+                    
+                    lazy 组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    Hooks
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../hooks/hooks-start.html">
+            
+                <a href="../hooks/hooks-start.html">
+            
+                    
+                    开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../hooks/hooks-use-state.html">
+            
+                <a href="../hooks/hooks-use-state.html">
+            
+                    
+                    useState
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../hooks/hooks-use-effect.html">
+            
+                <a href="../hooks/hooks-use-effect.html">
+            
+                    
+                    useEffect
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../hooks/hooks-others.html">
+            
+                <a href="../hooks/hooks-others.html">
+            
+                    
+                    其他API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../hooks/hooks-common.html">
+            
+                <a href="../hooks/hooks-common.html">
+            
+                    
+                    通用API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <form
+            action="https://buttondown.email/api/emails/embed-subscribe/Jokcy"
+            method="post"
+            target="popupwindow"
+            onsubmit="window.open('https://buttondown.email/Jokcy', 'popupwindow')"
+            class="buttondown-form"
+            >
+            <input type="email" name="email" id="bd-email" placeholder="(your@email.com)">
+            <input type="hidden" value="1" name="embed"/>
+            <button type="submit">订阅我</button>
+        </form>
+    </li>
+</ul>
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                 
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >react-scheduler</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="scheduler">scheduler</h1>
+<p>React16.5 &#x4E4B;&#x540E;&#x628A;<code>scheduler</code>&#x5355;&#x72EC;&#x53D1;&#x4E00;&#x4E2A;&#x5305;&#x4E86;&#xFF0C;&#x5C31;&#x53EB;<code>scheduler</code></p>
+<div class="api-method"><div class="api-method-definition"><h1 id="schedulecallbackwithexpirationtime">scheduleCallbackWithExpirationTime</h1>
+<p>&#x5F02;&#x6B65;&#x8FDB;&#x884C;<code>root</code>&#x4EFB;&#x52A1;&#x8C03;&#x5EA6;&#x5C31;&#x662F;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x505A;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x6700;&#x4E3B;&#x8981;&#x7684;&#x5C31;&#x662F;&#x8C03;&#x7528;&#x4E86;<code>scheduler</code>&#x7684;<code>scheduleDeferredCallback</code>&#x65B9;&#x6CD5;&#xFF08;&#x5728;<code>scheduler</code>&#x5305;&#x4E2D;&#x662F;<code>scheduleWork</code>&#xFF09;</p>
+<p>&#x4F20;&#x5165;&#x7684;&#x7684;&#x662F;&#x56DE;&#x8C03;&#x51FD;&#x6570;<code>performAsyncWork</code>&#xFF0C;&#x4EE5;&#x53CA;&#x4E00;&#x4E2A;&#x5305;&#x542B;<code>timeout</code>&#x8D85;&#x65F6;&#x4E8B;&#x4EF6;&#x7684;&#x5BF9;&#x8C61;</p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scheduleCallbackWithExpirationTime</span>(<span class="hljs-params">
+  root: FiberRoot,
+  expirationTime: ExpirationTime,
+</span>) </span>{
+  <span class="hljs-keyword">if</span> (callbackExpirationTime !== NoWork) {
+    <span class="hljs-comment">// A callback is already scheduled. Check its expiration time (timeout).</span>
+    <span class="hljs-keyword">if</span> (expirationTime &gt; callbackExpirationTime) {
+      <span class="hljs-comment">// Existing callback has sufficient timeout. Exit.</span>
+      <span class="hljs-keyword">return</span>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">if</span> (callbackID !== <span class="hljs-literal">null</span>) {
+        <span class="hljs-comment">// Existing callback has insufficient timeout. Cancel and schedule a</span>
+        <span class="hljs-comment">// new one.</span>
+        cancelDeferredCallback(callbackID)
+      }
+    }
+    <span class="hljs-comment">// The request callback timer is already running. Don&apos;t start a new one.</span>
+  } <span class="hljs-keyword">else</span> {
+    startRequestCallbackTimer()
+  }
+
+  callbackExpirationTime = expirationTime
+  <span class="hljs-keyword">const</span> currentMs = now() - originalStartTimeMs
+  <span class="hljs-keyword">const</span> expirationTimeMs = expirationTimeToMs(expirationTime)
+  <span class="hljs-keyword">const</span> timeout = expirationTimeMs - currentMs
+  callbackID = scheduleDeferredCallback(performAsyncWork, { timeout })
+}
+</code></pre>
+</div></div></div>
+
+<div class="api-method"><div class="api-method-definition"><h1 id="schedulerschedulework">scheduler.scheduleWork</h1>
+<p>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x8C03;&#x5EA6;&#x8282;&#x70B9;<code>newNode</code>&#xFF0C;&#x5E76;&#x6309;&#x7167;<code>timoutAt</code>&#x7684;&#x987A;&#x5E8F;&#x52A0;&#x5165;&#x5230;<code>CallbackNode</code>&#x94FE;&#x8868;&#xFF0C;&#x8C03;&#x7528;<code>ensureHostCallbackIsScheduled</code></p>
+<p>&#x8FD9;&#x91CC;&#x9762;&#x7684;<code>expirationTime</code>&#x662F;&#x8C03;&#x7528;&#x65F6;&#x4F20;&#x5165;&#x7684;<code>timeoutAt</code>&#x52A0;&#x4E0A;&#x5F53;&#x524D;&#x65F6;&#x95F4;&#x5F62;&#x6210;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x3002;</p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unstable_scheduleCallback</span>(<span class="hljs-params">callback, deprecated_options</span>) </span>{
+  <span class="hljs-keyword">var</span> startTime =
+    currentEventStartTime !== <span class="hljs-number">-1</span> ? currentEventStartTime : getCurrentTime()
+
+  <span class="hljs-keyword">var</span> expirationTime
+  <span class="hljs-keyword">if</span> (
+    <span class="hljs-keyword">typeof</span> deprecated_options === <span class="hljs-string">&apos;object&apos;</span> &amp;&amp;
+    deprecated_options !== <span class="hljs-literal">null</span> &amp;&amp;
+    <span class="hljs-keyword">typeof</span> deprecated_options.timeout === <span class="hljs-string">&apos;number&apos;</span>
+  ) {
+    <span class="hljs-comment">// <span class="hljs-doctag">FIXME:</span> Remove this branch once we lift expiration times out of React.</span>
+    expirationTime = startTime + deprecated_options.timeout
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x8FD9;&#x91CC;&#x662F;&#x4EE5;&#x540E;&#x628A;`expirationTime`&#x4ECE;React&#x4E2D;&#x62BD;&#x79BB;&#x51FA;&#x6765;&#x4E4B;&#x540E;&#x7684;&#x903B;&#x8F91;</span>
+  }
+
+  <span class="hljs-keyword">var</span> newNode = {
+    callback,
+    priorityLevel: currentPriorityLevel,
+    expirationTime,
+    next: <span class="hljs-literal">null</span>,
+    previous: <span class="hljs-literal">null</span>,
+  }
+
+  <span class="hljs-comment">// Insert the new callback into the list, ordered first by expiration, then</span>
+  <span class="hljs-comment">// by insertion. So the new callback is inserted any other callback with</span>
+  <span class="hljs-comment">// equal expiration.</span>
+  <span class="hljs-keyword">if</span> (firstCallbackNode === <span class="hljs-literal">null</span>) {
+    <span class="hljs-comment">// This is the first callback in the list.</span>
+    firstCallbackNode = newNode.next = newNode.previous = newNode
+    ensureHostCallbackIsScheduled()
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">var</span> next = <span class="hljs-literal">null</span>
+    <span class="hljs-keyword">var</span> node = firstCallbackNode
+    <span class="hljs-keyword">do</span> {
+      <span class="hljs-keyword">if</span> (node.expirationTime &gt; expirationTime) {
+        <span class="hljs-comment">// The new callback expires before this one.</span>
+        next = node
+        <span class="hljs-keyword">break</span>
+      }
+      node = node.next
+    } <span class="hljs-keyword">while</span> (node !== firstCallbackNode)
+
+    <span class="hljs-keyword">if</span> (next === <span class="hljs-literal">null</span>) {
+      <span class="hljs-comment">// No callback with a later expiration was found, which means the new</span>
+      <span class="hljs-comment">// callback has the latest expiration in the list.</span>
+      next = firstCallbackNode
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (next === firstCallbackNode) {
+      <span class="hljs-comment">// The new callback has the earliest expiration in the entire list.</span>
+      firstCallbackNode = newNode
+      ensureHostCallbackIsScheduled()
+    }
+
+    <span class="hljs-keyword">var</span> previous = next.previous
+    previous.next = next.previous = newNode
+    newNode.next = next
+    newNode.previous = previous
+  }
+
+  <span class="hljs-keyword">return</span> newNode
+}
+</code></pre>
+</div></div></div>
+
+<div class="api-method"><div class="api-method-definition"><h1 id="ensurehostcallbackisscheduled">ensureHostCallbackIsScheduled</h1>
+<p>&#x5982;&#x679C;&#x5DF2;&#x7ECF;&#x5728;&#x8C03;&#x7528;&#x56DE;&#x8C03;&#x4E86;&#xFF0C;&#x5C31; return&#xFF0C;&#x56E0;&#x4E3A;&#x672C;&#x6765;&#x5C31;&#x4F1A;&#x7EE7;&#x7EED;&#x8C03;&#x7528;&#x4E0B;&#x53BB;&#xFF0C;<code>isExecutingCallback</code>&#x5728;<code>flushWork</code>&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x88AB;&#x4FEE;&#x6539;&#x4E3A;<code>true</code></p>
+<p>&#x5982;&#x679C;<code>isHostCallbackScheduled</code>&#x4E3A;<code>false</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8FD8;&#x6CA1;&#x5F00;&#x59CB;&#x8C03;&#x5EA6;&#xFF0C;&#x90A3;&#x4E48;&#x8BBE;&#x4E3A;<code>true</code>&#xFF0C;&#x5982;&#x679C;&#x5DF2;&#x7ECF;&#x5F00;&#x59CB;&#x4E86;&#xFF0C;&#x5C31;&#x76F4;&#x63A5;&#x53D6;&#x6D88;&#xFF0C;&#x56E0;&#x4E3A;&#x987A;&#x5E8F;&#x53EF;&#x80FD;&#x53D8;&#x4E86;&#x3002;</p>
+<p>&#x8C03;&#x7528;<code>requestHostCallback</code>&#x5F00;&#x59CB;&#x8C03;&#x5EA6;</p>
+<p>&#x8FD9;&#x91CC;</p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ensureHostCallbackIsScheduled</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span> (isExecutingCallback) {
+    <span class="hljs-comment">// Don&apos;t schedule work yet; wait until the next time we yield.</span>
+    <span class="hljs-keyword">return</span>
+  }
+  <span class="hljs-comment">// Schedule the host callback using the earliest expiration in the list.</span>
+  <span class="hljs-keyword">var</span> expirationTime = firstCallbackNode.expirationTime
+  <span class="hljs-keyword">if</span> (!isHostCallbackScheduled) {
+    isHostCallbackScheduled = <span class="hljs-literal">true</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Cancel the existing host callback.</span>
+    cancelHostCallback()
+  }
+  requestHostCallback(flushWork, expirationTime)
+}
+
+cancelHostCallback = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  scheduledHostCallback = <span class="hljs-literal">null</span>
+  isMessageEventScheduled = <span class="hljs-literal">false</span>
+  timeoutTime = <span class="hljs-number">-1</span>
+}
+</code></pre>
+</div></div></div>
+
+<div class="api-method"><div class="api-method-definition"><h1 id="requesthostcallback">requestHostCallback</h1>
+<p>&#x5F00;&#x59CB;&#x8FDB;&#x5165;&#x8C03;&#x5EA6;&#xFF0C;&#x8BBE;&#x7F6E;&#x8C03;&#x5EA6;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x7528;<code>scheduledHostCallback</code>&#x548C;<code>timeoutTime</code>&#x8FD9;&#x4E24;&#x4E2A;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x8BB0;&#x5F55;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x548C;&#x5BF9;&#x5E94;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;</p>
+<p>&#x8C03;&#x7528;<code>requestAnimationFrameWithTimeout</code>&#xFF0C;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x8C03;&#x7528;<code>requestAnimationFrame</code>&#x5728;&#x52A0;&#x4E0A;&#x8BBE;&#x7F6E;&#x4E86;&#x4E00;&#x4E2A;<code>100ms</code>&#x7684;&#x5B9A;&#x65F6;&#x5668;&#xFF0C;&#x9632;&#x6B62;<code>requestAnimationFrame</code>&#x592A;&#x4E45;&#x4E0D;&#x89E6;&#x53D1;&#x3002;</p>
+<p>&#x8C03;&#x7528;&#x56DE;&#x8C03;<code>animtionTick</code>&#x5E76;&#x8BBE;&#x7F6E;<code>isAnimationFrameScheduled</code>&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x4E3A;<code>true</code></p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-js">requestHostCallback = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">callback, absoluteTimeout</span>) </span>{
+  scheduledHostCallback = callback
+  timeoutTime = absoluteTimeout
+  <span class="hljs-keyword">if</span> (isFlushingHostCallback || absoluteTimeout &lt; <span class="hljs-number">0</span>) {
+    <span class="hljs-comment">// Don&apos;t wait for the next frame. Continue working ASAP, in a new event.</span>
+    <span class="hljs-built_in">window</span>.postMessage(messageKey, <span class="hljs-string">&apos;*&apos;</span>)
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!isAnimationFrameScheduled) {
+    isAnimationFrameScheduled = <span class="hljs-literal">true</span>
+    requestAnimationFrameWithTimeout(animationTick)
+  }
+}
+</code></pre>
+</div></div></div>
+
+<h1 id="&#x6A21;&#x62DF;-requestidlecallback">&#x6A21;&#x62DF; requestIdleCallback</h1>
+<p>&#x56E0;&#x4E3A;<code>requestIdleCallback</code>&#x8FD9;&#x4E2A; API &#x76EE;&#x524D;&#x8FD8;&#x5904;&#x4E8E;&#x8349;&#x6848;&#x9636;&#x6BB5;&#xFF0C;&#x6240;&#x4EE5;&#x6D4F;&#x89C8;&#x5668;&#x5B9E;&#x73B0;&#x7387;&#x8FD8;&#x4E0D;&#x9AD8;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x8FD9;&#x91CC; React &#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E86;<code>polyfill</code>&#x7684;&#x65B9;&#x6848;&#x3002;</p>
+<p>&#x8FD9;&#x4E2A;&#x65B9;&#x6848;&#x7B80;&#x5355;&#x6765;&#x8BF4;&#x662F;&#x901A;&#x8FC7;<code>requestAnimationFrame</code>&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x6E32;&#x67D3;&#x4E00;&#x5E27;&#x4E4B;&#x524D;&#x505A;&#x4E00;&#x4E9B;&#x5904;&#x7406;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;<code>postMessage</code>&#x5728;<code>macro task</code>&#xFF08;&#x7C7B;&#x4F3C; setTimeout&#xFF09;&#x4E2D;&#x52A0;&#x5165;&#x4E00;&#x4E2A;&#x56DE;&#x8C03;&#xFF0C;&#x5728;&#x56E0;&#x4E3A;&#x63A5;&#x4E0B;&#x53BB;&#x4F1A;&#x8FDB;&#x5165;&#x6D4F;&#x89C8;&#x5668;&#x6E32;&#x67D3;&#x9636;&#x6BB5;&#xFF0C;&#x6240;&#x4EE5;&#x4E3B;&#x7EBF;&#x7A0B;&#x662F;&#x88AB; block &#x4F4F;&#x7684;&#xFF0C;&#x7B49;&#x5230;&#x6E32;&#x67D3;&#x5B8C;&#x4E86;&#x7136;&#x540E;&#x56DE;&#x6765;&#x6E05;&#x7A7A;<code>macro task</code>&#x3002;</p>
+<p>&#x603B;&#x4F53;&#x4E0A;&#x8DDF;<code>requestIdleCallback</code>&#x5DEE;&#x4E0D;&#x591A;&#xFF0C;<strong>&#x7B49;&#x5230;&#x4E3B;&#x7EBF;&#x7A0B;&#x6709;&#x7A7A;&#x7684;&#x65F6;&#x5019;&#x56DE;&#x6765;&#x8C03;&#x7528;</strong></p>
+<div class="api-method"><div class="api-method-definition"><h1 id="animationtick">animationTick</h1>
+<p>&#x53EA;&#x8981;<code>scheduledHostCallback</code>&#x8FD8;&#x5728;&#x5C31;&#x7EE7;&#x7EED;&#x8C03;&#x8981;<code>requestAnimationFrameWithTimeout</code>&#x56E0;&#x4E3A;&#x8FD9;&#x4E00;&#x5E27;&#x6E32;&#x67D3;&#x5B8C;&#x4E86;&#x53EF;&#x80FD;&#x961F;&#x5217;&#x8FD8;&#x6CA1;&#x60C5;&#x51B5;&#xFF0C;&#x672C;&#x8EAB;&#x4E5F;&#x662F;&#x8981;&#x8FDB;&#x5165;&#x518D;&#x6B21;&#x8C03;&#x7528;&#x7684;&#xFF0C;&#x8FD9;&#x8FB9;&#x5C31;&#x7701;&#x53BB;&#x4E86;<code>requestHostCallback</code>&#x5728;&#x6B21;&#x8C03;&#x7528;&#x7684;&#x5FC5;&#x8981;&#x6027;</p>
+<p>&#x63A5;&#x4E0B;&#x53BB;&#x4E00;&#x6BB5;&#x4EE3;&#x7801;&#x662F;&#x7528;&#x6765;&#x8BA1;&#x7B97;&#x76F8;&#x9694;&#x7684;<code>requestAnimationFrame</code>&#x7684;&#x65F6;&#x5DEE;&#x7684;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5DEE;&#x5982;&#x679C;&#x8FDE;&#x7EED;&#x4E24;&#x6B21;&#x90FD;&#x5C0F;&#x9C7C;&#x5F53;&#x524D;&#x7684;<code>activeFrameTime</code>&#xFF0C;&#x8BF4;&#x660E;&#x5E73;&#x53F0;&#x7684;&#x5E27;&#x7387;&#x662F;&#x5F88;&#x9AD8;&#x7684;&#xFF0C;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x52A8;&#x6001;&#x5F97;&#x7F29;&#x5C0F;&#x5E27;&#x65F6;&#x95F4;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x66F4;&#x65B0;<code>frameDeadline</code>&#xFF0C;&#x7136;&#x540E;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x89E6;&#x53D1;<code>idleTick</code>&#x5219;&#x53D1;&#x9001;&#x6D88;&#x606F;</p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-js"><span class="hljs-keyword">var</span> animationTick = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">rafTime</span>) </span>{
+  <span class="hljs-keyword">if</span> (scheduledHostCallback !== <span class="hljs-literal">null</span>) {
+    requestAnimationFrameWithTimeout(animationTick)
+  } <span class="hljs-keyword">else</span> {
+    isAnimationFrameScheduled = <span class="hljs-literal">false</span>
+    <span class="hljs-keyword">return</span>
+  }
+
+  <span class="hljs-keyword">var</span> nextFrameTime = rafTime - frameDeadline + activeFrameTime
+  <span class="hljs-keyword">if</span> (nextFrameTime &lt; activeFrameTime &amp;&amp; previousFrameTime &lt; activeFrameTime) {
+    <span class="hljs-keyword">if</span> (nextFrameTime &lt; <span class="hljs-number">8</span>) {
+      nextFrameTime = <span class="hljs-number">8</span>
+    }
+    activeFrameTime =
+      nextFrameTime &lt; previousFrameTime ? previousFrameTime : nextFrameTime
+  } <span class="hljs-keyword">else</span> {
+    previousFrameTime = nextFrameTime
+  }
+  frameDeadline = rafTime + activeFrameTime
+  <span class="hljs-keyword">if</span> (!isMessageEventScheduled) {
+    isMessageEventScheduled = <span class="hljs-literal">true</span>
+    <span class="hljs-built_in">window</span>.postMessage(messageKey, <span class="hljs-string">&apos;*&apos;</span>)
+  }
+}
+</code></pre>
+</div></div></div>
+
+<div class="api-method"><div class="api-method-definition"><h1 id="idletick">idleTick</h1>
+<p>&#x9996;&#x5148;&#x5224;&#x65AD;<code>postMessage</code>&#x662F;&#x4E0D;&#x662F;&#x81EA;&#x5DF1;&#x7684;&#xFF0C;&#x4E0D;&#x662F;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;</p>
+<p>&#x6E05;&#x7A7A;<code>scheduledHostCallback</code>&#x548C;<code>timeoutTime</code></p>
+<p>&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x65F6;&#x95F4;&#xFF0C;&#x5BF9;&#x6BD4;<code>frameDeadline</code>&#xFF0C;&#x67E5;&#x770B;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x8D85;&#x65F6;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x8D85;&#x65F6;&#x4E86;&#xFF0C;&#x5224;&#x65AD;&#x4E00;&#x4E0B;&#x4EFB;&#x52A1;<code>callback</code>&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x6709;&#x6CA1;&#x6709;&#x5230;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5230;&#xFF0C;&#x5219;&#x91CD;&#x65B0;&#x5BF9;&#x8FD9;&#x4E2A;<code>callback</code>&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x8C03;&#x5EA6;&#xFF0C;&#x7136;&#x540E;&#x8FD4;&#x56DE;&#x3002;&#x5982;&#x679C;&#x5230;&#x4E86;&#xFF0C;&#x5219;&#x8BBE;&#x7F6E;<code>didTimeout</code>&#x4E3A;<code>true</code></p>
+<p>&#x63A5;&#x4E0B;&#x53BB;&#x5C31;&#x662F;&#x8C03;&#x7528;<code>callback</code>&#x4E86;&#xFF0C;&#x8FD9;&#x91CC;&#x8BBE;&#x7F6E;<code>isFlushingHostCallback</code>&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x4E3A;<code>true</code>&#x4EE3;&#x8868;&#x6B63;&#x5728;&#x6267;&#x884C;&#x3002;&#x5E76;&#x4E14;&#x8C03;&#x7528;<code>callback</code>&#x4E5F;&#x5C31;&#x662F;<code>flushWork</code>&#x5E76;&#x4F20;&#x5165;<code>didTimeout</code></p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-js"><span class="hljs-keyword">var</span> idleTick = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+  <span class="hljs-keyword">if</span> (event.source !== <span class="hljs-built_in">window</span> || event.data !== messageKey) {
+    <span class="hljs-keyword">return</span>
+  }
+
+  isMessageEventScheduled = <span class="hljs-literal">false</span>
+
+  <span class="hljs-keyword">var</span> prevScheduledCallback = scheduledHostCallback
+  <span class="hljs-keyword">var</span> prevTimeoutTime = timeoutTime
+  scheduledHostCallback = <span class="hljs-literal">null</span>
+  timeoutTime = <span class="hljs-number">-1</span>
+
+  <span class="hljs-keyword">var</span> currentTime = getCurrentTime()
+
+  <span class="hljs-keyword">var</span> didTimeout = <span class="hljs-literal">false</span>
+  <span class="hljs-keyword">if</span> (frameDeadline - currentTime &lt;= <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">if</span> (prevTimeoutTime !== <span class="hljs-number">-1</span> &amp;&amp; prevTimeoutTime &lt;= currentTime) {
+      didTimeout = <span class="hljs-literal">true</span>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">if</span> (!isAnimationFrameScheduled) {
+        isAnimationFrameScheduled = <span class="hljs-literal">true</span>
+        requestAnimationFrameWithTimeout(animationTick)
+      }
+      scheduledHostCallback = prevScheduledCallback
+      timeoutTime = prevTimeoutTime
+      <span class="hljs-keyword">return</span>
+    }
+  }
+
+  <span class="hljs-keyword">if</span> (prevScheduledCallback !== <span class="hljs-literal">null</span>) {
+    isFlushingHostCallback = <span class="hljs-literal">true</span>
+    <span class="hljs-keyword">try</span> {
+      prevScheduledCallback(didTimeout)
+    } <span class="hljs-keyword">finally</span> {
+      isFlushingHostCallback = <span class="hljs-literal">false</span>
+    }
+  }
+}
+</code></pre>
+</div></div></div>
+
+<div class="api-method"><div class="api-method-definition"><h1 id="flushwork">flushWork</h1>
+<p>&#x5148;&#x8BBE;&#x7F6E;<code>isExecutingCallback</code>&#x4E3A;<code>true</code>&#xFF0C;&#x4EE3;&#x8868;&#x6B63;&#x5728;&#x8C03;&#x7528;<code>callback</code></p>
+<p>&#x8BBE;&#x7F6E;<code>deadlineObject.didTimeout</code>&#xFF0C;&#x5728; React &#x4E1A;&#x52A1;&#x4E2D;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x5224;&#x65AD;&#x4EFB;&#x52A1;&#x662F;&#x5426;&#x8D85;&#x65F6;</p>
+<p>&#x5982;&#x679C;<code>didTimeout</code>&#xFF0C;&#x4F1A;&#x4E00;&#x6B21;&#x4ECE;<code>firstCallbackNode</code>&#x5411;&#x540E;&#x4E00;&#x76F4;&#x6267;&#x884C;&#xFF0C;&#x77E5;&#x9053;&#x7B2C;&#x4E00;&#x4E2A;&#x6CA1;&#x8FC7;&#x671F;&#x7684;&#x4EFB;&#x52A1;</p>
+<p>&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8D85;&#x65F6;&#xFF0C;&#x5219;&#x4F9D;&#x6B64;&#x6267;&#x884C;&#x7B2C;&#x4E00;&#x4E2A;<code>callback</code>&#xFF0C;&#x77E5;&#x9053;&#x5E27;&#x65F6;&#x95F4;&#x7ED3;&#x675F;&#x4E3A;&#x6B62;</p>
+<p>&#x6700;&#x540E;&#x6E05;&#x7406;&#x53D8;&#x91CF;&#xFF0C;&#x5982;&#x679C;&#x4EFB;&#x52A1;&#x6CA1;&#x6709;&#x6267;&#x884C;&#x5B8C;&#xFF0C;&#x5219;&#x518D;&#x6B21;&#x8C03;&#x7528;<code>ensureHostCallbackIsScheduled</code>&#x8FDB;&#x5165;&#x8C03;&#x5EA6;</p>
+<p>&#x987A;&#x4FBF;&#x628A;<code>Immedia</code>&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x4EFB;&#x52A1;&#x90FD;&#x8C03;&#x7528;&#x4E00;&#x904D;&#x3002;</p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">flushWork</span>(<span class="hljs-params">didTimeout</span>) </span>{
+  isExecutingCallback = <span class="hljs-literal">true</span>
+  deadlineObject.didTimeout = didTimeout
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">if</span> (didTimeout) {
+      <span class="hljs-keyword">while</span> (firstCallbackNode !== <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">var</span> currentTime = getCurrentTime()
+        <span class="hljs-keyword">if</span> (firstCallbackNode.expirationTime &lt;= currentTime) {
+          <span class="hljs-keyword">do</span> {
+            flushFirstCallback()
+          } <span class="hljs-keyword">while</span> (
+            firstCallbackNode !== <span class="hljs-literal">null</span> &amp;&amp;
+            firstCallbackNode.expirationTime &lt;= currentTime
+          )
+          <span class="hljs-keyword">continue</span>
+        }
+        <span class="hljs-keyword">break</span>
+      }
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">if</span> (firstCallbackNode !== <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">do</span> {
+          flushFirstCallback()
+        } <span class="hljs-keyword">while</span> (
+          firstCallbackNode !== <span class="hljs-literal">null</span> &amp;&amp;
+          getFrameDeadline() - getCurrentTime() &gt; <span class="hljs-number">0</span>
+        )
+      }
+    }
+  } <span class="hljs-keyword">finally</span> {
+    isExecutingCallback = <span class="hljs-literal">false</span>
+    <span class="hljs-keyword">if</span> (firstCallbackNode !== <span class="hljs-literal">null</span>) {
+      ensureHostCallbackIsScheduled()
+    } <span class="hljs-keyword">else</span> {
+      isHostCallbackScheduled = <span class="hljs-literal">false</span>
+    }
+    flushImmediateWork()
+  }
+}
+</code></pre>
+</div></div></div>
+
+<h1 id="flushfirstcallback">flushFirstCallback</h1>
+<p>&#x4EE3;&#x7801;&#x592A;&#x957F;&#x4E0D;&#x653E;&#x4E86;&#xFF0C;&#x4ED6;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x5F88;&#x7B80;&#x5355;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x5F53;&#x524D;&#x961F;&#x5217;&#x4E2D;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x56DE;&#x8C03;&#xFF0C;&#x6E05;&#x7A7A;&#x961F;&#x5217;</li>
+<li>&#x8C03;&#x7528;&#x56DE;&#x8C03;&#x5E76;&#x4F20;&#x5165;<code>deadline</code>&#x5BF9;&#x8C61;&#xFF0C;&#x91CC;&#x9762;&#x6709;<code>timeRemaining</code>&#x65B9;&#x6CD5;&#x901A;&#x8FC7;<code>frameDeadline - now()</code>&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5E27;&#x65F6;&#x95F4;&#x5DF2;&#x7ECF;&#x5230;&#x4E86;</li>
+<li>&#x5982;&#x679C;&#x56DE;&#x8C03;&#x6709;&#x8FD4;&#x56DE;&#x5185;&#x5BB9;&#xFF0C;&#x628A;&#x8FD9;&#x4E2A;&#x8FD4;&#x56DE;&#x52A0;&#x5165;&#x5230;&#x56DE;&#x8C03;&#x961F;&#x5217;</li>
+</ul>
+<h1 id="&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x53C2;&#x8003;">&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x53C2;&#x8003;</h1>
+<h4 id="ishostcallbackscheduled">isHostCallbackScheduled</h4>
+<p>&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5F00;&#x59CB;&#x8C03;&#x5EA6;&#x4E86;&#xFF0C;&#x5728;<code>ensureHostCallbackIsScheduled</code>&#x8BBE;&#x7F6E;&#x4E3A;<code>true</code>&#xFF0C;&#x5728;&#x7ED3;&#x675F;&#x6267;&#x884C;<code>callback</code>&#x4E4B;&#x540E;&#x8BBE;&#x7F6E;&#x4E3A;<code>false</code></p>
+<h4 id="scheduledhostcallback">scheduledHostCallback</h4>
+<p>&#x5728;<code>requestHostCallback</code>&#x8BBE;&#x7F6E;&#xFF0C;&#x503C;&#x4E00;&#x822C;&#x4E3A;<code>flushWork</code>&#xFF0C;&#x4EE3;&#x8868;&#x4E0B;&#x4E00;&#x4E2A;&#x8C03;&#x5EA6;&#x8981;&#x505A;&#x7684;&#x4E8B;&#x60C5;</p>
+<h4 id="ismessageeventscheduled">isMessageEventScheduled</h4>
+<p>&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x53D1;&#x9001;&#x8C03;&#x7528;<code>idleTick</code>&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x5728;<code>animationTick</code>&#x4E2D;&#x8BBE;&#x7F6E;&#x4E3A;<code>true</code></p>
+<h4 id="timeouttime">timeoutTime</h4>
+<p>&#x8868;&#x793A;&#x8FC7;&#x671F;&#x4EFB;&#x52A1;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x5728;<code>idleTick</code>&#x4E2D;&#x53D1;&#x73B0;&#x7B2C;&#x4E00;&#x4E2A;&#x4EFB;&#x52A1;&#x7684;&#x65F6;&#x95F4;&#x5DF2;&#x7ECF;&#x8FC7;&#x671F;&#x7684;&#x65F6;&#x5019;&#x8BBE;&#x7F6E;</p>
+<h4 id="isanimationframescheduled">isAnimationFrameScheduled</h4>
+<p>&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5F00;&#x59CB;&#x8C03;&#x7528;<code>requestAnimationFrame</code></p>
+<h4 id="activeframetime">activeFrameTime</h4>
+<p>&#x7ED9;&#x4E00;&#x5E27;&#x6E32;&#x67D3;&#x7528;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 33&#xFF0C;&#x4E5F;&#x5C31;&#x662F; 1 &#x79D2; 30 &#x5E27;</p>
+<h4 id="framedeadline">frameDeadline</h4>
+<p>&#x8BB0;&#x5F55;&#x5F53;&#x524D;&#x5E27;&#x7684;&#x5230;&#x671F;&#x65F6;&#x95F4;&#xFF0C;&#x4ED6;&#x7B49;&#x4E8E;<code>currentTime + activeFraeTime</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<code>requestAnimationFrame</code>&#x56DE;&#x8C03;&#x4F20;&#x5165;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x52A0;&#x4E0A;&#x4E00;&#x5E27;&#x7684;&#x65F6;&#x95F4;&#x3002;</p>
+<h4 id="isflushinghostcallback">isFlushingHostCallback</h4>
+<p>&#x662F;&#x5426;&#x6B63;&#x5728;&#x6267;&#x884C;<code>callback</code></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+<div id="QR" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin: 20px; margin-top: 40px; padding-top: 20px; border: 2px solid #ea8;">
+  <img
+    src="https://static.coursebetter.com/202112/Jokcy%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81.png"
+    alt="Jokcy的二维码"
+    width="200px"
+  />
+  <p style="padding: 20px; font-size: 16px; color: #d81665; font-weight: bold;">
+    扫码添加Jokcy，更多更新更优质的前端学习内容不断更新中，期待与你一起成长！
+  </p>
+</div>
+<div style="position: fixed; right: 0; bottom: 100px; cursor: pointer; width: 60px; background-color: #fff;" id="floatQR">
+  <p id="qr-text" style="padding: 20px; font-size: 12px; color: #d81665; font-weight: bold; display: none; margin: 0; padding: 3px 10px;">
+    扫码添加Jokcy，更多更新更优质的前端学习内容不断更新中，期待与你一起成长！
+  </p>
+  <img
+    src="https://static.coursebetter.com/202112/Jokcy%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81.png"
+    alt="Jokcy的二维码"
+    width="100%"
+  />
+</div>
+
+<script>
+  let timer
+    document.querySelector('#floatQR').addEventListener('mouseover', () => {
+      $('#floatQR').animate({
+        width: '300px'
+      })
+      timer = setTimeout(() => {
+        $('#qr-text').show()
+      }, 600)
+    })
+
+    document.querySelector('#floatQR').addEventListener('mouseleave', () => {
+      clearTimeout(timer)
+      $('#floatQR').animate({
+        width: '60px'
+      })
+      $('#qr-text').hide()
+    })
+</script>
+
+                        </div>
+                    </div>
+                
+<div id="disqus_thread"></div>
+<script>
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+  ;(function() {
+    // DON'T EDIT BELOW THIS LINE
+    var d = document,
+      s = d.createElement('script')
+    s.src = 'https://react-source-code.disqus.com/embed.js'
+    s.setAttribute('data-timestamp', +new Date())
+    ;(d.head || d.body).appendChild(s)
+  })()
+</script>
+<noscript
+  >Please enable JavaScript to view the
+  <a href="https://disqus.com/?ref_noscript"
+    >comments powered by Disqus.</a
+  ></noscript
+>
+
+            </div>
+
+            
+
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"react-scheduler","level":"1.4.3","depth":2,"next":{"title":"performWork","level":"1.4.4","depth":2,"path":"book/flow/perform-work.md","ref":"book/flow/perform-work.md","articles":[]},"previous":{"title":"scheduleWork","level":"1.4.2","depth":2,"path":"book/flow/schedule-work.md","ref":"book/flow/schedule-work.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-api"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":true,"instapaper":false,"vk":false,"all":["weibo","google","twitter","weibo","instapaper"]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-api":{"languages":[],"split":true,"theme":"light"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React源码解析","language":"zh-hans","gitbook":"*"},"file":{"path":"book/flow/scheduler-pkg.md","mtime":"2023-08-03T04:41:57.889Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-08-03T05:35:59.106Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

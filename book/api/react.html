@@ -1,0 +1,1304 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>React API · React源码解析</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+         
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="react-element.html" />
+    
+    
+
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=UA-49483742-5"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || []
+  function gtag() {
+    dataLayer.push(arguments)
+  }
+  gtag('js', new Date())
+
+  gtag('config', 'UA-49483742-5')
+</script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    <li>
+        <a href="https://vue3.w2deep.com" target="_blank" class="custom-link" style="background: #3eaf7c; color: #efefef; margin-top: -10px;">新鲜的vue3源码解析</a>
+    </li>
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="react.html">
+            
+                <a href="react.html">
+            
+                    
+                    React API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="react-element.html">
+            
+                <a href="react-element.html">
+            
+                    
+                    ReactElement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="react-children.html">
+            
+                <a href="react-children.html">
+            
+                    
+                    React Children
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="react-structure.html">
+            
+                <a href="react-structure.html">
+            
+                    
+                    React 中的数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    创建更新
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../update/react-dom-render.html">
+            
+                <a href="../update/react-dom-render.html">
+            
+                    
+                    ReactDOM.render
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../update/set-state.html">
+            
+                <a href="../update/set-state.html">
+            
+                    
+                    setState & forceUpdate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../update/expiration-time.html">
+            
+                <a href="../update/expiration-time.html">
+            
+                    
+                    expirationTime 计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    任务调度
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../flow/scheduler-global.html">
+            
+                <a href="../flow/scheduler-global.html">
+            
+                    
+                    全局变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../flow/schedule-work.html">
+            
+                <a href="../flow/schedule-work.html">
+            
+                    
+                    scheduleWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../flow/scheduler-pkg.html">
+            
+                <a href="../flow/scheduler-pkg.html">
+            
+                    
+                    react-scheduler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../flow/perform-work.html">
+            
+                <a href="../flow/perform-work.html">
+            
+                    
+                    performWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../flow/perform-unit-of-work.html">
+            
+                <a href="../flow/perform-unit-of-work.html">
+            
+                    
+                    performUnitOfWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../flow/render-root.html">
+            
+                <a href="../flow/render-root.html">
+            
+                    
+                    renderRoot
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.6.1" data-path="../flow/render-root/throw-exception.html">
+            
+                <a href="../flow/render-root/throw-exception.html">
+            
+                    
+                    throwException
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../flow/begin-work.html">
+            
+                <a href="../flow/begin-work.html">
+            
+                    
+                    beginWork
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.7.1" data-path="../flow/begin-work/mount-indeterminate-component.html">
+            
+                <a href="../flow/begin-work/mount-indeterminate-component.html">
+            
+                    
+                    mountIndeterminateComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.2" data-path="../flow/begin-work/mount-lazy-component.html">
+            
+                <a href="../flow/begin-work/mount-lazy-component.html">
+            
+                    
+                    mountLazyComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.3" data-path="../flow/begin-work/update-functional-component.html">
+            
+                <a href="../flow/begin-work/update-functional-component.html">
+            
+                    
+                    updateFunctionalComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.4" data-path="../flow/begin-work/update-class-component.html">
+            
+                <a href="../flow/begin-work/update-class-component.html">
+            
+                    
+                    updateClassComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.5" data-path="../flow/begin-work/update-host-root.html">
+            
+                <a href="../flow/begin-work/update-host-root.html">
+            
+                    
+                    updateHostRoot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.6" data-path="../flow/begin-work/update-host-component.html">
+            
+                <a href="../flow/begin-work/update-host-component.html">
+            
+                    
+                    updateHostComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.7" data-path="../flow/begin-work/update-host-text.html">
+            
+                <a href="../flow/begin-work/update-host-text.html">
+            
+                    
+                    updateHostText
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.8" data-path="../feature/Suspense-component.md">
+            
+                <span>
+            
+                    
+                    updateSuspenseComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.9" data-path="../flow/begin-work/update-portal-component.html">
+            
+                <a href="../flow/begin-work/update-portal-component.html">
+            
+                    
+                    updatePortalComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.10" data-path="../flow/begin-work/update-forward-ref.html">
+            
+                <a href="../flow/begin-work/update-forward-ref.html">
+            
+                    
+                    updateForwardRef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.11" data-path="../flow/begin-work/update-fragment.html">
+            
+                <a href="../flow/begin-work/update-fragment.html">
+            
+                    
+                    updateFragment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.12" data-path="../flow/begin-work/update-mode.html">
+            
+                <a href="../flow/begin-work/update-mode.html">
+            
+                    
+                    updateMode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.13" data-path="../flow/begin-work/update-profiler.html">
+            
+                <a href="../flow/begin-work/update-profiler.html">
+            
+                    
+                    updateProfiler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.14" data-path="../flow/begin-work/update-context-provider.html">
+            
+                <a href="../flow/begin-work/update-context-provider.html">
+            
+                    
+                    updateContextProvider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.15" data-path="../flow/begin-work/update-context-consumer.html">
+            
+                <a href="../flow/begin-work/update-context-consumer.html">
+            
+                    
+                    updateContextConsumer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../flow/reconcile-children.html">
+            
+                <a href="../flow/reconcile-children.html">
+            
+                    
+                    reconcileChildren
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.8.1" data-path="../flow/reconcile-children/single.html">
+            
+                <a href="../flow/reconcile-children/single.html">
+            
+                    
+                    调和单个节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.2" data-path="../flow/reconcile-children/array.html">
+            
+                <a href="../flow/reconcile-children/array.html">
+            
+                    
+                    调和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    commit 阶段
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../commit-phase/commit-root.html">
+            
+                <a href="../commit-phase/commit-root.html">
+            
+                    
+                    commitRoot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../commit-phase/invokeGuardedCallback.html">
+            
+                <a href="../commit-phase/invokeGuardedCallback.html">
+            
+                    
+                    invokeGuardedCallback
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../commit-phase/commitBeforeMutationLifecycles.html">
+            
+                <a href="../commit-phase/commitBeforeMutationLifecycles.html">
+            
+                    
+                    commitBeforeMutationLifecycles
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../commit-phase/commit-all-host-effects.html">
+            
+                <a href="../commit-phase/commit-all-host-effects.html">
+            
+                    
+                    commitAllHostEffects
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.4.1" data-path="../commit-phase/host-effects/CommitPlacement.html">
+            
+                <a href="../commit-phase/host-effects/CommitPlacement.html">
+            
+                    
+                    commitPlacement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.2" data-path="../commit-phase/host-effects/CommitWork.html">
+            
+                <a href="../commit-phase/host-effects/CommitWork.html">
+            
+                    
+                    commitWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.3" data-path="../commit-phase/host-effects/CommitDeletion.html">
+            
+                <a href="../commit-phase/host-effects/CommitDeletion.html">
+            
+                    
+                    commitDeletion
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../commit-phase/commit-all-lifecycles.html">
+            
+                <a href="../commit-phase/commit-all-lifecycles.html">
+            
+                    
+                    commitAllLifecycle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    功能
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../features/context.html">
+            
+                <a href="../features/context.html">
+            
+                    
+                    context
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../features/hydrate.html">
+            
+                <a href="../features/hydrate.html">
+            
+                    
+                    hydrate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../features/ref.html">
+            
+                <a href="../features/ref.html">
+            
+                    
+                    ref
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../features/event-injection.html">
+            
+                <a href="../features/event-injection.html">
+            
+                    
+                    事件系统初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../features/event-bind.html">
+            
+                <a href="../features/event-bind.html">
+            
+                    
+                    事件绑定
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../features/event-dispatch.html">
+            
+                <a href="../features/event-dispatch.html">
+            
+                    
+                    事件触发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="../features/event-create-event-object.html">
+            
+                <a href="../features/event-create-event-object.html">
+            
+                    
+                    事件对象生成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="../features/Suspense-component.html">
+            
+                <a href="../features/Suspense-component.html">
+            
+                    
+                    Suspense
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="../features/suspense.html">
+            
+                <a href="../features/suspense.html">
+            
+                    
+                    挂起任务的含义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.10" data-path="../features/suspense-lazy.html">
+            
+                <a href="../features/suspense-lazy.html">
+            
+                    
+                    lazy 组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    Hooks
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../hooks/hooks-start.html">
+            
+                <a href="../hooks/hooks-start.html">
+            
+                    
+                    开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../hooks/hooks-use-state.html">
+            
+                <a href="../hooks/hooks-use-state.html">
+            
+                    
+                    useState
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../hooks/hooks-use-effect.html">
+            
+                <a href="../hooks/hooks-use-effect.html">
+            
+                    
+                    useEffect
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../hooks/hooks-others.html">
+            
+                <a href="../hooks/hooks-others.html">
+            
+                    
+                    其他API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../hooks/hooks-common.html">
+            
+                <a href="../hooks/hooks-common.html">
+            
+                    
+                    通用API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <form
+            action="https://buttondown.email/api/emails/embed-subscribe/Jokcy"
+            method="post"
+            target="popupwindow"
+            onsubmit="window.open('https://buttondown.email/Jokcy', 'popupwindow')"
+            class="buttondown-form"
+            >
+            <input type="email" name="email" id="bd-email" placeholder="(your@email.com)">
+            <input type="hidden" value="1" name="embed"/>
+            <button type="submit">订阅我</button>
+        </form>
+    </li>
+</ul>
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                 
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >React API</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="react">React</h1>
+<blockquote>
+<p>&#x867D;&#x7136;&#x5E73;&#x65F6;&#x6211;&#x4EEC;&#x90FD;&#x559C;&#x6B22;&#x8BF4;&#x6211;&#x4EEC;&#x7528;<code>React</code>&#x4F5C;&#x4E3A;&#x6211;&#x4EEC;&#x7684;&#x6838;&#x5FC3;&#x6846;&#x67B6;&#xFF0C;&#x4F46;&#x5176;&#x5B9E;&#x5927;&#x90E8;&#x5206;&#x4EBA;&#x90FD;&#x4E0D;&#x77E5;&#x9053;<code>React</code>&#x5230;&#x5E95;&#x662F;&#x4E2A;&#x4EC0;&#x4E48;&#x4E1C;&#x4E1C;&#x3002;&#x4E8B;&#x5B9E;&#x4E0A;&#x81EA;&#x4ECE;Facebook&#x628A;<code>React</code>&#x548C;<code>ReactDOM</code>&#x5206;&#x5305;&#x53D1;&#x5E03;&#x4E4B;&#x540E;&#xFF0C;<code>React</code>&#x5C31;&#x4E0D;&#x4EC5;&#x4EC5;&#x662F;&#x4E00;&#x5F00;&#x59CB;&#x7684;&#x524D;&#x7AEF;&#x6846;&#x67B6;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x5728;15&#x7248;&#x672C;&#x4E4B;&#x540E;&#x53BB;&#x770B;&#x4E00;&#x4E0B;<code>react</code>&#x548C;<code>react-dom</code>&#x7684;&#x6E90;&#x7801;&#x5927;&#x5C0F;&#xFF0C;&#x4F60;&#x5C31;&#x4F1A;&#x53D1;&#x73B0;&#xFF0C;<code>react</code>&#x4EC5;&#x4EC5;1000&#x591A;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x800C;<code>react-dom</code>&#x5374;&#x5C06;&#x8FD1;2w&#x884C;&#x3002;&#x662F;&#x7684;&#x4F60;&#x6CA1;&#x770B;&#x9519;&#xFF0C;&#x800C;&#x4E14;&#x4F60;&#x5F88;&#x53EF;&#x80FD;&#x4E5F;&#x6CA1;&#x6709;&#x60F3;&#x9519;&#xFF0C;&#x5176;&#x5B9E;&#x5927;&#x90E8;&#x5206;&#x7684;&#x6846;&#x67B6;&#x903B;&#x8F91;&#x90FD;&#x5728;<code>react-dom</code>&#x5F53;&#x4E2D;&#xFF0C;&#x90A3;&#x4E48;<code>react</code>&#x5230;&#x5E95;&#x662F;&#x4E2A;&#x4EC0;&#x4E48;&#x4E1C;&#x4E1C;&#x5462;&#xFF1F;</p>
+</blockquote>
+<p>&#x5173;&#x4E8E;&#x7248;&#x672C;&#xFF0C;&#x672C;&#x4E66;&#x662F;&#x5728;React16+&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x5199;&#x7684;&#xFF0C;React16&#x76F8;&#x8F83;&#x4E8E;&#x4E4B;&#x524D;&#x7684;&#x7248;&#x672C;&#x662F;&#x6838;&#x5FC3;&#x4E0A;&#x7684;&#x4E00;&#x6B21;&#x91CD;&#x5199;&#xFF0C;&#x867D;&#x7136;&#x4E3B;&#x8981;&#x7684;API&#x90FD;&#x6CA1;&#x6709;&#x53D8;&#x5316;&#xFF0C;&#x4F46;&#x662F;&#x589E;&#x52A0;&#x4E86;&#x5F88;&#x591A;&#x80FD;&#x529B;&#x3002;&#x5E76;&#x4E14;&#x9996;&#x6B21;&#x5F15;&#x5165;&#x4E86;<code>Fiber</code>&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x4E4B;&#x540E;&#x65B0;&#x7684;&#x529F;&#x80FD;&#x90FD;&#x662F;&#x56F4;&#x7ED5;<code>Fiber</code>&#x8FDB;&#x884C;&#x5B9E;&#x73B0;&#xFF0C;&#x6BD4;&#x5982;<code>AsyncMode</code>&#xFF0C;<code>Profiler</code>&#x7B49;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x5E76;&#x4E0D;&#x4F1A;&#x8BB2;16&#x7248;&#x672C;&#x4E4B;&#x524D;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x4E00;&#x662F;&#x9762;&#x5411;&#x672A;&#x6765;&#xFF0C;&#x4E8C;&#x662F;&#x4E4B;&#x524D;&#x7248;&#x672C;&#x7684;&#x6E90;&#x7801;&#x6211;&#x4E5F;&#x6CA1;&#x770B;&#x8FC7;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E00;&#x4E0B;React&#x66B4;&#x9732;&#x51FA;&#x6765;&#x7684;API</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> React = {
+  Children: {
+    map,
+    forEach,
+    count,
+    toArray,
+    only,
+  },
+
+  createRef,
+  Component,
+  PureComponent,
+
+  createContext,
+  forwardRef,
+
+  Fragment: REACT_FRAGMENT_TYPE,
+  StrictMode: REACT_STRICT_MODE_TYPE,
+  unstable_AsyncMode: REACT_ASYNC_MODE_TYPE,
+  unstable_Profiler: REACT_PROFILER_TYPE,
+
+  createElement: __DEV__ ? createElementWithValidation : createElement,
+  cloneElement: __DEV__ ? cloneElementWithValidation : cloneElement,
+  createFactory: __DEV__ ? createFactoryWithValidation : createFactory,
+  isValidElement: isValidElement,
+
+  version: ReactVersion,
+
+  __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: ReactSharedInternals,
+};
+</code></pre>
+<p>&#x8BF7;&#x5148;&#x65E0;&#x89C6;<code>__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED</code></p>
+<h3 id="children">Children</h3>
+<p>&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x5806;&#x5E2E;&#x4F60;&#x5904;&#x7406;<code>props.children</code>&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x56E0;&#x4E3A;<code>children</code>&#x662F;&#x4E00;&#x4E2A;&#x7C7B;&#x4F3C;&#x6570;&#x7EC4;&#x4F46;&#x662F;&#x4E0D;&#x662F;&#x6570;&#x7EC4;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x8981;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x53EF;&#x4EE5;&#x7528;<code>React.Children</code>&#x5916;&#x6302;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<h3 id="createref">createRef</h3>
+<p>&#x65B0;&#x7684;<code>ref</code>&#x7528;&#x6CD5;&#xFF0C;React&#x5373;&#x5C06;&#x629B;&#x5F03;<code>&lt;div ref=&quot;myDiv&quot; /&gt;</code>&#x8FD9;&#x79CD;<code>string ref</code>&#x7684;&#x7528;&#x6CD5;&#xFF0C;&#x5C06;&#x6765;&#x4F60;&#x53EA;&#x80FD;&#x4F7F;&#x7528;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#x6765;&#x4F7F;&#x7528;<code>ref</code></p>
+<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span></span>{
+
+  <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">this</span>.ref = React.createRef()
+  }
+
+  render() {
+    <span class="hljs-keyword">return</span> &lt;div ref={this.ref} /&gt;
+    // or
+    return &lt;div ref={(node) =&gt; this.funRef = node} /&gt;
+  }
+
+}
+</code></pre>
+<h3 id="component--purecomponent">Component &amp; PureComponent</h3>
+<p>&#x8FD9;&#x4E24;&#x4E2A;&#x7C7B;&#x57FA;&#x672C;&#x76F8;&#x540C;&#xFF0C;&#x552F;&#x4E00;&#x7684;&#x533A;&#x522B;&#x662F;<code>PureComponent</code>&#x7684;&#x539F;&#x578B;&#x4E0A;&#x591A;&#x4E86;&#x4E00;&#x4E2A;&#x6807;&#x8BC6;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">if</span> (ctor.prototype &amp;&amp; ctor.prototype.isPureReactComponent) {
+  <span class="hljs-keyword">return</span> (
+    !shallowEqual(oldProps, newProps) || !shallowEqual(oldState, newState)
+  );
+}
+</code></pre>
+<p>&#x8FD9;&#x662F;&#x68C0;&#x67E5;&#x7EC4;&#x4EF6;&#x662F;&#x5426;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x7684;&#x4E00;&#x4E2A;&#x5224;&#x65AD;&#xFF0C;<code>ctor</code>&#x5C31;&#x662F;&#x4F60;&#x58F0;&#x660E;&#x7684;&#x7EE7;&#x627F;&#x81EA;<code>Component or PureComponent</code>&#x7684;&#x7C7B;&#xFF0C;&#x4ED6;&#x4F1A;&#x5224;&#x65AD;&#x4F60;&#x662F;&#x5426;&#x7EE7;&#x627F;&#x81EA;<code>PureComponent</code>&#xFF0C;&#x5982;&#x679C;&#x662F;&#x7684;&#x8BDD;&#x5C31;<code>shallowEqual</code>&#x6BD4;&#x8F83;<code>state</code>&#x548C;<code>props</code>&#x3002;</p>
+<p>&#x987A;&#x4FBF;&#x8BF4;&#x4E00;&#x4E0B;&#xFF1A;<strong>React&#x4E2D;&#x5BF9;&#x6BD4;&#x4E00;&#x4E2A;ClassComponent&#x662F;&#x5426;&#x9700;&#x8981;&#x66F4;&#x65B0;&#xFF0C;&#x53EA;&#x6709;&#x4E24;&#x4E2A;&#x5730;&#x65B9;&#x3002;&#x4E00;&#x662F;&#x770B;&#x6709;&#x6CA1;&#x6709;<code>shouldComponentUpdate</code>&#x65B9;&#x6CD5;&#xFF0C;&#x4E8C;&#x5C31;&#x662F;&#x8FD9;&#x91CC;&#x7684;<code>PureComponent</code>&#x5224;&#x65AD;</strong></p>
+<h3 id="createcontext">createContext</h3>
+<p><code>createContext</code>&#x662F;&#x5B98;&#x65B9;&#x5B9A;&#x7A3F;&#x7684;<code>context</code>&#x65B9;&#x6848;&#xFF0C;&#x5728;&#x8FD9;&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x4E00;&#x76F4;&#x5728;&#x7528;&#x7684;&#x8001;&#x7684;<code>context API</code>&#x90FD;&#x662F;React&#x4E0D;&#x63A8;&#x8350;&#x7684;API&#xFF0C;&#x73B0;&#x5728;&#x65B0;&#x7684;API&#x91CA;&#x51FA;&#xFF0C;&#x5B98;&#x65B9;&#x4E5F;&#x5DF2;&#x7ECF;&#x786E;&#x5B9A;&#x5728;17&#x5927;&#x7248;&#x672C;&#x4F1A;&#x628A;&#x8001;<code>API</code>&#x53BB;&#x9664;&#x3002;</p>
+<p>&#x65B0;API&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> { Provider, Consumer } = React.createContext(<span class="hljs-string">&apos;defaultValue&apos;</span>)
+
+<span class="hljs-keyword">const</span> ProviderComp = (props) =&gt; (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{&apos;realValue&apos;}</span>&gt;</span>
+    {props.children}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span>
+)
+
+<span class="hljs-keyword">const</span> ConsumerComp = () =&gt; (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Consumer</span>&gt;</span>
+    {(value) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{value}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">Consumber</span>&gt;</span></span>
+)
+</code></pre>
+<p>&#x540E;&#x9762;&#x8BB2;<code>context</code>&#x4F1A;&#x4E13;&#x95E8;&#x6BD4;&#x8F83;&#x65B0;&#x8001;&#x7684;API&#x7684;&#x5DEE;&#x5F02;&#xFF0C;&#x63D0;&#x524D;&#x8BF4;&#x4E00;&#x53E5;&#xFF0C;&#x8001;API&#x7684;&#x6027;&#x80FD;&#x4E0D;&#x662F;&#x4E00;&#x822C;&#x7684;&#x5DEE;</p>
+<h3 id="forwardref">forwardRef</h3>
+<p><code>forwardRef</code>&#x662F;&#x7528;&#x6765;&#x89E3;&#x51B3;HOC&#x7EC4;&#x4EF6;&#x4F20;&#x9012;<code>ref</code>&#x7684;&#x95EE;&#x9898;&#x7684;&#xFF0C;&#x6240;&#x8C13;HOC&#x5C31;&#x662F;<code>Higher Order Component</code>&#xFF0C;&#x6BD4;&#x5982;&#x4F7F;&#x7528;<code>redux</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x7528;<code>connect</code>&#x6765;&#x7ED9;&#x7EC4;&#x4EF6;&#x7ED1;&#x5B9A;&#x9700;&#x8981;&#x7684;state&#xFF0C;&#x8FD9;&#x5176;&#x4E2D;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x7ED9;&#x6211;&#x4EEC;&#x7684;&#x7EC4;&#x4EF6;&#x5728;&#x5916;&#x90E8;&#x5305;&#x4E86;&#x4E00;&#x5C42;&#x7EC4;&#x4EF6;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;<code>...props</code>&#x7684;&#x65B9;&#x5F0F;&#x628A;&#x5916;&#x90E8;&#x7684;<code>props</code>&#x4F20;&#x5165;&#x5230;&#x5B9E;&#x9645;&#x7EC4;&#x4EF6;&#x3002;<code>forwardRef</code>&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> TargetComponent = React.forwardRef((props, ref) =&gt; (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TargetComponent</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{ref}</span> /&gt;</span>
+))
+</span></code></pre>
+<p>&#x8FD9;&#x4E5F;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x63D0;&#x4F9B;<code>createRef</code>&#x4F5C;&#x4E3A;&#x65B0;&#x7684;<code>ref</code>&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x7684;&#x539F;&#x56E0;&#xFF0C;&#x5982;&#x679C;&#x7528;<code>string ref</code>&#x5C31;&#x6CA1;&#x6CD5;&#x5F53;&#x4F5C;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x4E86;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x53EA;&#x662F;&#x7B80;&#x5355;&#x8BF4;&#x4E00;&#x4E0B;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF0C;&#x540E;&#x9762;&#x8BB2;<code>ref</code>&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x8BE6;&#x7EC6;&#x5206;&#x6790;&#x3002;</p>
+<h3 id="&#x7C7B;&#x578B;">&#x7C7B;&#x578B;</h3>
+<pre><code class="lang-js">Fragment: REACT_FRAGMENT_TYPE,
+StrictMode: REACT_STRICT_MODE_TYPE,
+unstable_AsyncMode: REACT_ASYNC_MODE_TYPE,
+unstable_Profiler: REACT_PROFILER_TYPE,
+</code></pre>
+<p>&#x8FD9;&#x56DB;&#x4E2A;&#x90FD;&#x662F;React&#x63D0;&#x4F9B;&#x7684;<em>&#x7EC4;&#x4EF6;</em>&#xFF0C;&#x4F46;&#x4ED6;&#x4EEC;&#x5462;&#x5176;&#x5B9E;&#x90FD;&#x53EA;&#x662F;&#x5360;&#x4F4D;&#x7B26;&#xFF0C;&#x90FD;&#x662F;&#x4E00;&#x4E2A;<code>Symbol</code>&#xFF0C;&#x5728;React&#x5B9E;&#x9645;&#x68C0;&#x6D4B;&#x5230;&#x4ED6;&#x4EEC;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x505A;&#x4E00;&#x4E9B;&#x7279;&#x6B8A;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x6BD4;&#x5982;<code>StrictMode</code>&#x548C;<code>AsyncMode</code>&#x4F1A;&#x8BA9;&#x4ED6;&#x4EEC;&#x7684;&#x5B50;&#x8282;&#x70B9;&#x5BF9;&#x5E94;&#x7684;Fiber&#x7684;<code>mode</code>&#x90FD;&#x53D8;&#x6210;&#x548C;&#x4ED6;&#x4EEC;&#x4E00;&#x6837;&#x7684;<code>mode</code></p>
+<h3 id="createelement--cloneelement--createfactory--isvalidelement">createElement &amp; cloneElement &amp; createFactory &amp; isValidElement</h3>
+<p><code>createElement</code>&#x53EF;&#x8C13;&#x662F;React&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;API&#x4E86;&#xFF0C;&#x4ED6;&#x662F;&#x7528;&#x6765;&#x521B;&#x5EFA;<code>ReactElement</code>&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x5F88;&#x591A;&#x540C;&#x5B66;&#x5374;&#x4ECE;&#x6CA1;&#x89C1;&#x8FC7;&#x4E5F;&#x6CA1;&#x7528;&#x8FC7;&#xFF0C;&#x8FD9;&#x662F;&#x4E3A;&#x5565;&#x5462;&#xFF1F;&#x56E0;&#x4E3A;&#x4F60;&#x7528;&#x4E86;JSX&#xFF0C;JSX&#x5E76;&#x4E0D;&#x662F;&#x6807;&#x51C6;&#x7684;js&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x7ECF;&#x8FC7;&#x7F16;&#x8BD1;&#x624D;&#x80FD;&#x53D8;&#x6210;&#x53EF;&#x8FD0;&#x884C;&#x7684;js&#xFF0C;&#x800C;&#x7F16;&#x8BD1;&#x4E4B;&#x540E;&#xFF0C;<code>createElement</code>&#x5C31;&#x51FA;&#x73B0;&#x4E86;&#xFF1A;</p>
+<pre><code class="lang-js">// jsx
+&lt;div id=&quot;app&quot;&gt;content&lt;/div&gt;
+
+// js
+React.createElement(&apos;div&apos;, { id: &apos;app&apos; }, &apos;content&apos;)
+</code></pre>
+<p><code>cloneElement</code>&#x5C31;&#x5F88;&#x660E;&#x663E;&#x4E86;&#xFF0C;&#x662F;&#x7528;&#x6765;&#x514B;&#x9686;&#x4E00;&#x4E2A;<code>ReactElement</code>&#x7684;</p>
+<p><code>createFactory</code>&#x662F;&#x7528;&#x6765;&#x521B;&#x5EFA;&#x4E13;&#x95E8;&#x7528;&#x6765;&#x521B;&#x5EFA;&#x67D0;&#x4E00;&#x7C7B;<code>ReactElement</code>&#x7684;&#x5DE5;&#x5382;&#x7684;&#xFF0C;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createFactory</span>(<span class="hljs-params">type</span>) </span>{
+  <span class="hljs-keyword">const</span> factory = createElement.bind(<span class="hljs-literal">null</span>, type);
+  factory.type = type;
+  <span class="hljs-keyword">return</span> factory;
+}
+</code></pre>
+<p>&#x4ED6;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x7ED1;&#x5B9A;&#x4E86;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x7684;<code>createElement</code>&#xFF0C;&#x4E00;&#x822C;&#x6211;&#x4EEC;&#x7528;JSX&#x8FDB;&#x884C;&#x7F16;&#x7A0B;&#x7684;&#x65F6;&#x5019;&#x4E0D;&#x4F1A;&#x7528;&#x5230;&#x8FD9;&#x4E2A;API</p>
+<p><code>isValidElement</code>&#x987E;&#x540D;&#x601D;&#x4E49;&#x5C31;&#x662F;&#x7528;&#x6765;&#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x662F;&#x4E00;&#x4E2A;<code>ReactElement</code>&#x7684;&#xFF0C;&#x57FA;&#x672C;&#x4E5F;&#x7528;&#x4E0D;&#x592A;&#x5230;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+<div id="QR" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin: 20px; margin-top: 40px; padding-top: 20px; border: 2px solid #ea8;">
+  <img
+    src="https://static.coursebetter.com/202112/Jokcy%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81.png"
+    alt="Jokcy的二维码"
+    width="200px"
+  />
+  <p style="padding: 20px; font-size: 16px; color: #d81665; font-weight: bold;">
+    扫码添加Jokcy，更多更新更优质的前端学习内容不断更新中，期待与你一起成长！
+  </p>
+</div>
+<div style="position: fixed; right: 0; bottom: 100px; cursor: pointer; width: 60px; background-color: #fff;" id="floatQR">
+  <p id="qr-text" style="padding: 20px; font-size: 12px; color: #d81665; font-weight: bold; display: none; margin: 0; padding: 3px 10px;">
+    扫码添加Jokcy，更多更新更优质的前端学习内容不断更新中，期待与你一起成长！
+  </p>
+  <img
+    src="https://static.coursebetter.com/202112/Jokcy%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81.png"
+    alt="Jokcy的二维码"
+    width="100%"
+  />
+</div>
+
+<script>
+  let timer
+    document.querySelector('#floatQR').addEventListener('mouseover', () => {
+      $('#floatQR').animate({
+        width: '300px'
+      })
+      timer = setTimeout(() => {
+        $('#qr-text').show()
+      }, 600)
+    })
+
+    document.querySelector('#floatQR').addEventListener('mouseleave', () => {
+      clearTimeout(timer)
+      $('#floatQR').animate({
+        width: '60px'
+      })
+      $('#qr-text').hide()
+    })
+</script>
+
+                        </div>
+                    </div>
+                
+<div id="disqus_thread"></div>
+<script>
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+  ;(function() {
+    // DON'T EDIT BELOW THIS LINE
+    var d = document,
+      s = d.createElement('script')
+    s.src = 'https://react-source-code.disqus.com/embed.js'
+    s.setAttribute('data-timestamp', +new Date())
+    ;(d.head || d.body).appendChild(s)
+  })()
+</script>
+<noscript
+  >Please enable JavaScript to view the
+  <a href="https://disqus.com/?ref_noscript"
+    >comments powered by Disqus.</a
+  ></noscript
+>
+
+            </div>
+
+            
+
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"React API","level":"1.2.1","depth":2,"next":{"title":"ReactElement","level":"1.2.2","depth":2,"path":"book/api/react-element.md","ref":"book/api/react-element.md","articles":[]},"previous":{"title":"基础","level":"1.2","depth":1,"ref":"","articles":[{"title":"React API","level":"1.2.1","depth":2,"path":"book/api/react.md","ref":"book/api/react.md","articles":[]},{"title":"ReactElement","level":"1.2.2","depth":2,"path":"book/api/react-element.md","ref":"book/api/react-element.md","articles":[]},{"title":"React Children","level":"1.2.3","depth":2,"path":"book/api/react-children.md","ref":"book/api/react-children.md","articles":[]},{"title":"React 中的数据结构","level":"1.2.4","depth":2,"path":"book/api/react-structure.md","ref":"book/api/react-structure.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["theme-api"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":true,"instapaper":false,"vk":false,"all":["weibo","google","twitter","weibo","instapaper"]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-api":{"languages":[],"split":true,"theme":"light"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React源码解析","language":"zh-hans","gitbook":"*"},"file":{"path":"book/api/react.md","mtime":"2023-08-03T04:41:57.876Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-08-03T05:35:59.106Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

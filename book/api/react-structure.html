@@ -1,0 +1,1495 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>React 中的数据结构 · React源码解析</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+         
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="react-children.html" />
+    
+
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=UA-49483742-5"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || []
+  function gtag() {
+    dataLayer.push(arguments)
+  }
+  gtag('js', new Date())
+
+  gtag('config', 'UA-49483742-5')
+</script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    <li>
+        <a href="https://vue3.w2deep.com" target="_blank" class="custom-link" style="background: #3eaf7c; color: #efefef; margin-top: -10px;">新鲜的vue3源码解析</a>
+    </li>
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="react.html">
+            
+                <a href="react.html">
+            
+                    
+                    React API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="react-element.html">
+            
+                <a href="react-element.html">
+            
+                    
+                    ReactElement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="react-children.html">
+            
+                <a href="react-children.html">
+            
+                    
+                    React Children
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.4" data-path="react-structure.html">
+            
+                <a href="react-structure.html">
+            
+                    
+                    React 中的数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    创建更新
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../update/react-dom-render.html">
+            
+                <a href="../update/react-dom-render.html">
+            
+                    
+                    ReactDOM.render
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../update/set-state.html">
+            
+                <a href="../update/set-state.html">
+            
+                    
+                    setState & forceUpdate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../update/expiration-time.html">
+            
+                <a href="../update/expiration-time.html">
+            
+                    
+                    expirationTime 计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    任务调度
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../flow/scheduler-global.html">
+            
+                <a href="../flow/scheduler-global.html">
+            
+                    
+                    全局变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../flow/schedule-work.html">
+            
+                <a href="../flow/schedule-work.html">
+            
+                    
+                    scheduleWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../flow/scheduler-pkg.html">
+            
+                <a href="../flow/scheduler-pkg.html">
+            
+                    
+                    react-scheduler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../flow/perform-work.html">
+            
+                <a href="../flow/perform-work.html">
+            
+                    
+                    performWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../flow/perform-unit-of-work.html">
+            
+                <a href="../flow/perform-unit-of-work.html">
+            
+                    
+                    performUnitOfWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../flow/render-root.html">
+            
+                <a href="../flow/render-root.html">
+            
+                    
+                    renderRoot
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.6.1" data-path="../flow/render-root/throw-exception.html">
+            
+                <a href="../flow/render-root/throw-exception.html">
+            
+                    
+                    throwException
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../flow/begin-work.html">
+            
+                <a href="../flow/begin-work.html">
+            
+                    
+                    beginWork
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.7.1" data-path="../flow/begin-work/mount-indeterminate-component.html">
+            
+                <a href="../flow/begin-work/mount-indeterminate-component.html">
+            
+                    
+                    mountIndeterminateComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.2" data-path="../flow/begin-work/mount-lazy-component.html">
+            
+                <a href="../flow/begin-work/mount-lazy-component.html">
+            
+                    
+                    mountLazyComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.3" data-path="../flow/begin-work/update-functional-component.html">
+            
+                <a href="../flow/begin-work/update-functional-component.html">
+            
+                    
+                    updateFunctionalComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.4" data-path="../flow/begin-work/update-class-component.html">
+            
+                <a href="../flow/begin-work/update-class-component.html">
+            
+                    
+                    updateClassComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.5" data-path="../flow/begin-work/update-host-root.html">
+            
+                <a href="../flow/begin-work/update-host-root.html">
+            
+                    
+                    updateHostRoot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.6" data-path="../flow/begin-work/update-host-component.html">
+            
+                <a href="../flow/begin-work/update-host-component.html">
+            
+                    
+                    updateHostComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.7" data-path="../flow/begin-work/update-host-text.html">
+            
+                <a href="../flow/begin-work/update-host-text.html">
+            
+                    
+                    updateHostText
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.8" data-path="../feature/Suspense-component.md">
+            
+                <span>
+            
+                    
+                    updateSuspenseComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.9" data-path="../flow/begin-work/update-portal-component.html">
+            
+                <a href="../flow/begin-work/update-portal-component.html">
+            
+                    
+                    updatePortalComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.10" data-path="../flow/begin-work/update-forward-ref.html">
+            
+                <a href="../flow/begin-work/update-forward-ref.html">
+            
+                    
+                    updateForwardRef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.11" data-path="../flow/begin-work/update-fragment.html">
+            
+                <a href="../flow/begin-work/update-fragment.html">
+            
+                    
+                    updateFragment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.12" data-path="../flow/begin-work/update-mode.html">
+            
+                <a href="../flow/begin-work/update-mode.html">
+            
+                    
+                    updateMode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.13" data-path="../flow/begin-work/update-profiler.html">
+            
+                <a href="../flow/begin-work/update-profiler.html">
+            
+                    
+                    updateProfiler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.14" data-path="../flow/begin-work/update-context-provider.html">
+            
+                <a href="../flow/begin-work/update-context-provider.html">
+            
+                    
+                    updateContextProvider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.15" data-path="../flow/begin-work/update-context-consumer.html">
+            
+                <a href="../flow/begin-work/update-context-consumer.html">
+            
+                    
+                    updateContextConsumer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../flow/reconcile-children.html">
+            
+                <a href="../flow/reconcile-children.html">
+            
+                    
+                    reconcileChildren
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.8.1" data-path="../flow/reconcile-children/single.html">
+            
+                <a href="../flow/reconcile-children/single.html">
+            
+                    
+                    调和单个节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.2" data-path="../flow/reconcile-children/array.html">
+            
+                <a href="../flow/reconcile-children/array.html">
+            
+                    
+                    调和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    commit 阶段
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../commit-phase/commit-root.html">
+            
+                <a href="../commit-phase/commit-root.html">
+            
+                    
+                    commitRoot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../commit-phase/invokeGuardedCallback.html">
+            
+                <a href="../commit-phase/invokeGuardedCallback.html">
+            
+                    
+                    invokeGuardedCallback
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../commit-phase/commitBeforeMutationLifecycles.html">
+            
+                <a href="../commit-phase/commitBeforeMutationLifecycles.html">
+            
+                    
+                    commitBeforeMutationLifecycles
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../commit-phase/commit-all-host-effects.html">
+            
+                <a href="../commit-phase/commit-all-host-effects.html">
+            
+                    
+                    commitAllHostEffects
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.4.1" data-path="../commit-phase/host-effects/CommitPlacement.html">
+            
+                <a href="../commit-phase/host-effects/CommitPlacement.html">
+            
+                    
+                    commitPlacement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.2" data-path="../commit-phase/host-effects/CommitWork.html">
+            
+                <a href="../commit-phase/host-effects/CommitWork.html">
+            
+                    
+                    commitWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.3" data-path="../commit-phase/host-effects/CommitDeletion.html">
+            
+                <a href="../commit-phase/host-effects/CommitDeletion.html">
+            
+                    
+                    commitDeletion
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../commit-phase/commit-all-lifecycles.html">
+            
+                <a href="../commit-phase/commit-all-lifecycles.html">
+            
+                    
+                    commitAllLifecycle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    功能
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../features/context.html">
+            
+                <a href="../features/context.html">
+            
+                    
+                    context
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../features/hydrate.html">
+            
+                <a href="../features/hydrate.html">
+            
+                    
+                    hydrate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../features/ref.html">
+            
+                <a href="../features/ref.html">
+            
+                    
+                    ref
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../features/event-injection.html">
+            
+                <a href="../features/event-injection.html">
+            
+                    
+                    事件系统初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../features/event-bind.html">
+            
+                <a href="../features/event-bind.html">
+            
+                    
+                    事件绑定
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../features/event-dispatch.html">
+            
+                <a href="../features/event-dispatch.html">
+            
+                    
+                    事件触发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="../features/event-create-event-object.html">
+            
+                <a href="../features/event-create-event-object.html">
+            
+                    
+                    事件对象生成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="../features/Suspense-component.html">
+            
+                <a href="../features/Suspense-component.html">
+            
+                    
+                    Suspense
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="../features/suspense.html">
+            
+                <a href="../features/suspense.html">
+            
+                    
+                    挂起任务的含义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.10" data-path="../features/suspense-lazy.html">
+            
+                <a href="../features/suspense-lazy.html">
+            
+                    
+                    lazy 组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    Hooks
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../hooks/hooks-start.html">
+            
+                <a href="../hooks/hooks-start.html">
+            
+                    
+                    开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../hooks/hooks-use-state.html">
+            
+                <a href="../hooks/hooks-use-state.html">
+            
+                    
+                    useState
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../hooks/hooks-use-effect.html">
+            
+                <a href="../hooks/hooks-use-effect.html">
+            
+                    
+                    useEffect
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../hooks/hooks-others.html">
+            
+                <a href="../hooks/hooks-others.html">
+            
+                    
+                    其他API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../hooks/hooks-common.html">
+            
+                <a href="../hooks/hooks-common.html">
+            
+                    
+                    通用API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <form
+            action="https://buttondown.email/api/emails/embed-subscribe/Jokcy"
+            method="post"
+            target="popupwindow"
+            onsubmit="window.open('https://buttondown.email/Jokcy', 'popupwindow')"
+            class="buttondown-form"
+            >
+            <input type="email" name="email" id="bd-email" placeholder="(your@email.com)">
+            <input type="hidden" value="1" name="embed"/>
+            <button type="submit">订阅我</button>
+        </form>
+    </li>
+</ul>
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                 
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >React 中的数据结构</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x672C;&#x6587;&#x4E2D;&#x4F7F;&#x7528; gist &#x8FDB;&#x884C;&#x5C55;&#x793A;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x88AB; Adblock &#x5C4F;&#x853D;&#xFF0C;&#x5982;&#x679C;&#x53D1;&#x73B0;&#x65E0;&#x6CD5;&#x770B;&#x5230; gist &#x7684;&#x5185;&#x5BB9;&#x8BF7;&#x5C1D;&#x8BD5;&#x5237;&#x65B0;&#xFF0C;&#x5982;&#x679C;&#x8FD8;&#x4E0D;&#x884C;&#x53EF;&#x4EE5;<a href="mailto:jokcy@hotmail.com" target="_blank">&#x53CD;&#x9988;&#x7ED9;&#x6211;</a></p>
+</blockquote>
+<h1 id="fiberroot">FiberRoot</h1>
+<pre><code class="lang-js">type BaseFiberRootProperties = {|
+  <span class="hljs-comment">// root&#x8282;&#x70B9;&#xFF0C;render&#x65B9;&#x6CD5;&#x63A5;&#x6536;&#x7684;&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;</span>
+  containerInfo: any,
+  <span class="hljs-comment">// &#x53EA;&#x6709;&#x5728;&#x6301;&#x4E45;&#x66F4;&#x65B0;&#x4E2D;&#x4F1A;&#x7528;&#x5230;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x4E0D;&#x652F;&#x6301;&#x589E;&#x91CF;&#x66F4;&#x65B0;&#x7684;&#x5E73;&#x53F0;&#xFF0C;react-dom&#x4E0D;&#x4F1A;&#x7528;&#x5230;</span>
+  pendingChildren: any,
+  <span class="hljs-comment">// &#x5F53;&#x524D;&#x5E94;&#x7528;&#x5BF9;&#x5E94;&#x7684;Fiber&#x5BF9;&#x8C61;&#xFF0C;&#x662F;Root Fiber</span>
+  current: Fiber,
+
+  <span class="hljs-comment">// &#x4E00;&#x4E0B;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x662F;&#x7528;&#x6765;&#x533A;&#x5206;</span>
+  <span class="hljs-comment">// 1) &#x6CA1;&#x6709;&#x63D0;&#x4EA4;(committed)&#x7684;&#x4EFB;&#x52A1;</span>
+  <span class="hljs-comment">// 2) &#x6CA1;&#x6709;&#x63D0;&#x4EA4;&#x7684;&#x6302;&#x8D77;&#x4EFB;&#x52A1;</span>
+  <span class="hljs-comment">// 3) &#x6CA1;&#x6709;&#x63D0;&#x4EA4;&#x7684;&#x53EF;&#x80FD;&#x88AB;&#x6302;&#x8D77;&#x7684;&#x4EFB;&#x52A1;</span>
+  <span class="hljs-comment">// &#x6211;&#x4EEC;&#x9009;&#x62E9;&#x4E0D;&#x8FFD;&#x8E2A;&#x6BCF;&#x4E2A;&#x5355;&#x72EC;&#x7684;&#x963B;&#x585E;&#x767B;&#x8BB0;&#xFF0C;&#x4E3A;&#x4E86;&#x517C;&#x987E;&#x6027;&#x80FD;</span>
+  <span class="hljs-comment">// The earliest and latest priority levels that are suspended from committing.</span>
+  <span class="hljs-comment">// &#x6700;&#x8001;&#x548C;&#x65B0;&#x7684;&#x5728;&#x63D0;&#x4EA4;&#x7684;&#x65F6;&#x5019;&#x88AB;&#x6302;&#x8D77;&#x7684;&#x4EFB;&#x52A1;</span>
+  earliestSuspendedTime: ExpirationTime,
+  latestSuspendedTime: ExpirationTime,
+  <span class="hljs-comment">// The earliest and latest priority levels that are not known to be suspended.</span>
+  <span class="hljs-comment">// &#x6700;&#x8001;&#x548C;&#x6700;&#x65B0;&#x7684;&#x4E0D;&#x786E;&#x5B9A;&#x662F;&#x5426;&#x4F1A;&#x6302;&#x8D77;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#xFF08;&#x6240;&#x6709;&#x4EFB;&#x52A1;&#x8FDB;&#x6765;&#x4E00;&#x5F00;&#x59CB;&#x90FD;&#x662F;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#xFF09;</span>
+  earliestPendingTime: ExpirationTime,
+  latestPendingTime: ExpirationTime,
+  <span class="hljs-comment">// The latest priority level that was pinged by a resolved promise and can</span>
+  <span class="hljs-comment">// be retried.</span>
+  <span class="hljs-comment">// &#x6700;&#x65B0;&#x7684;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;promise&#x88AB;reslove&#x5E76;&#x4E14;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x5C1D;&#x8BD5;&#x7684;&#x4F18;&#x5148;&#x7EA7;</span>
+  latestPingedTime: ExpirationTime,
+
+  <span class="hljs-comment">// &#x5982;&#x679C;&#x6709;&#x9519;&#x8BEF;&#x88AB;&#x629B;&#x51FA;&#x5E76;&#x4E14;&#x6CA1;&#x6709;&#x66F4;&#x591A;&#x7684;&#x66F4;&#x65B0;&#x5B58;&#x5728;&#xFF0C;&#x6211;&#x4EEC;&#x5C1D;&#x8BD5;&#x5728;&#x5904;&#x7406;&#x9519;&#x8BEF;&#x524D;&#x540C;&#x6B65;&#x91CD;&#x65B0;&#x4ECE;&#x5934;&#x6E32;&#x67D3;</span>
+  <span class="hljs-comment">// &#x5728;`renderRoot`&#x51FA;&#x73B0;&#x65E0;&#x6CD5;&#x5904;&#x7406;&#x7684;&#x9519;&#x8BEF;&#x65F6;&#x4F1A;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A;`true`</span>
+  didError: boolean,
+
+  <span class="hljs-comment">// &#x6B63;&#x5728;&#x7B49;&#x5F85;&#x63D0;&#x4EA4;&#x7684;&#x4EFB;&#x52A1;&#x7684;`expirationTime`</span>
+  pendingCommitExpirationTime: ExpirationTime,
+  <span class="hljs-comment">// &#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x7684;&#x4EFB;&#x52A1;&#x7684;FiberRoot&#x5BF9;&#x8C61;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x53EA;&#x6709;&#x4E00;&#x4E2A;Root&#xFF0C;&#x90A3;&#x4ED6;&#x6C38;&#x8FDC;&#x53EA;&#x53EF;&#x80FD;&#x662F;&#x8FD9;&#x4E2A;Root&#x5BF9;&#x5E94;&#x7684;Fiber&#xFF0C;&#x6216;&#x8005;&#x662F;null</span>
+  <span class="hljs-comment">// &#x5728;commit&#x9636;&#x6BB5;&#x53EA;&#x4F1A;&#x5904;&#x7406;&#x8FD9;&#x4E2A;&#x503C;&#x5BF9;&#x5E94;&#x7684;&#x4EFB;&#x52A1;</span>
+  finishedWork: Fiber | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// &#x5728;&#x4EFB;&#x52A1;&#x88AB;&#x6302;&#x8D77;&#x7684;&#x65F6;&#x5019;&#x901A;&#x8FC7;setTimeout&#x8BBE;&#x7F6E;&#x7684;&#x8FD4;&#x56DE;&#x5185;&#x5BB9;&#xFF0C;&#x7528;&#x6765;&#x4E0B;&#x4E00;&#x6B21;&#x5982;&#x679C;&#x6709;&#x65B0;&#x7684;&#x4EFB;&#x52A1;&#x6302;&#x8D77;&#x65F6;&#x6E05;&#x7406;&#x8FD8;&#x6CA1;&#x89E6;&#x53D1;&#x7684;timeout</span>
+  timeoutHandle: TimeoutHandle | NoTimeout,
+  <span class="hljs-comment">// &#x9876;&#x5C42;context&#x5BF9;&#x8C61;&#xFF0C;&#x53EA;&#x6709;&#x4E3B;&#x52A8;&#x8C03;&#x7528;`renderSubtreeIntoContainer`&#x65F6;&#x624D;&#x4F1A;&#x6709;&#x7528;</span>
+  context: <span class="hljs-built_in">Object</span> | <span class="hljs-literal">null</span>,
+  pendingContext: <span class="hljs-built_in">Object</span> | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// &#x7528;&#x6765;&#x786E;&#x5B9A;&#x7B2C;&#x4E00;&#x6B21;&#x6E32;&#x67D3;&#x7684;&#x65F6;&#x5019;&#x662F;&#x5426;&#x9700;&#x8981;&#x878D;&#x5408;</span>
+  +hydrate: boolean,
+  <span class="hljs-comment">// &#x5F53;&#x524D;root&#x4E0A;&#x5269;&#x4F59;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;</span>
+  <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> &#x63D0;&#x5230;renderer&#x91CC;&#x9762;&#x533A;&#x5904;&#x7406;</span>
+  nextExpirationTimeToWorkOn: ExpirationTime,
+  <span class="hljs-comment">// &#x5F53;&#x524D;&#x66F4;&#x65B0;&#x5BF9;&#x5E94;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;</span>
+  expirationTime: ExpirationTime,
+  <span class="hljs-comment">// List of top-level batches. This list indicates whether a commit should be</span>
+  <span class="hljs-comment">// deferred. Also contains completion callbacks.</span>
+  <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Lift this into the renderer</span>
+  <span class="hljs-comment">// &#x9876;&#x5C42;&#x6279;&#x6B21;&#xFF08;&#x6279;&#x5904;&#x7406;&#x4EFB;&#x52A1;&#xFF1F;&#xFF09;&#x8FD9;&#x4E2A;&#x53D8;&#x91CF;&#x6307;&#x660E;&#x4E00;&#x4E2A;commit&#x662F;&#x5426;&#x5E94;&#x8BE5;&#x88AB;&#x63A8;&#x8FDF;</span>
+  <span class="hljs-comment">// &#x540C;&#x65F6;&#x5305;&#x62EC;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x7684;&#x56DE;&#x8C03;</span>
+  <span class="hljs-comment">// &#x8C8C;&#x4F3C;&#x7528;&#x5728;&#x6D4B;&#x8BD5;&#x7684;&#x65F6;&#x5019;&#xFF1F;</span>
+  firstBatch: Batch | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// root&#x4E4B;&#x95F4;&#x5173;&#x8054;&#x7684;&#x94FE;&#x8868;&#x7ED3;&#x6784;</span>
+  nextScheduledRoot: FiberRoot | <span class="hljs-literal">null</span>,
+|};
+</code></pre>
+<h1 id="fiber">Fiber</h1>
+<pre><code class="lang-js"><span class="hljs-comment">// Fiber&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x9700;&#x8981;&#x88AB;&#x5904;&#x7406;&#x6216;&#x8005;&#x5DF2;&#x7ECF;&#x5904;&#x7406;&#x4E86;&#xFF0C;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x53EF;&#x4EE5;&#x6709;&#x4E00;&#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A;Fiber</span>
+type Fiber = {|
+  <span class="hljs-comment">// &#x6807;&#x8BB0;&#x4E0D;&#x540C;&#x7684;&#x7EC4;&#x4EF6;&#x7C7B;&#x578B;</span>
+  tag: WorkTag,
+
+  <span class="hljs-comment">// ReactElement&#x91CC;&#x9762;&#x7684;key</span>
+  key: <span class="hljs-literal">null</span> | string,
+
+  <span class="hljs-comment">// ReactElement.type&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x8C03;&#x7528;`createElement`&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;</span>
+  elementType: any,
+
+  <span class="hljs-comment">// The resolved function/class/ associated with this fiber.</span>
+  <span class="hljs-comment">// &#x5F02;&#x6B65;&#x7EC4;&#x4EF6;resolved&#x4E4B;&#x540E;&#x8FD4;&#x56DE;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x4E00;&#x822C;&#x662F;`function`&#x6216;&#x8005;`class`</span>
+  type: any,
+
+  <span class="hljs-comment">// The local state associated with this fiber.</span>
+  <span class="hljs-comment">// &#x8DDF;&#x5F53;&#x524D;Fiber&#x76F8;&#x5173;&#x672C;&#x5730;&#x72B6;&#x6001;&#xFF08;&#x6BD4;&#x5982;&#x6D4F;&#x89C8;&#x5668;&#x73AF;&#x5883;&#x5C31;&#x662F;DOM&#x8282;&#x70B9;&#xFF09;</span>
+  stateNode: any,
+
+  <span class="hljs-comment">// &#x6307;&#x5411;&#x4ED6;&#x5728;Fiber&#x8282;&#x70B9;&#x6811;&#x4E2D;&#x7684;`parent`&#xFF0C;&#x7528;&#x6765;&#x5728;&#x5904;&#x7406;&#x5B8C;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#x4E4B;&#x540E;&#x5411;&#x4E0A;&#x8FD4;&#x56DE;</span>
+  <span class="hljs-keyword">return</span>: Fiber | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x5355;&#x94FE;&#x8868;&#x6811;&#x7ED3;&#x6784;</span>
+  <span class="hljs-comment">// &#x6307;&#x5411;&#x81EA;&#x5DF1;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5B50;&#x8282;&#x70B9;</span>
+  child: Fiber | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// &#x6307;&#x5411;&#x81EA;&#x5DF1;&#x7684;&#x5144;&#x5F1F;&#x7ED3;&#x6784;</span>
+  <span class="hljs-comment">// &#x5144;&#x5F1F;&#x8282;&#x70B9;&#x7684;return&#x6307;&#x5411;&#x540C;&#x4E00;&#x4E2A;&#x7236;&#x8282;&#x70B9;</span>
+  sibling: Fiber | <span class="hljs-literal">null</span>,
+  index: number,
+
+  <span class="hljs-comment">// ref&#x5C5E;&#x6027;</span>
+  ref: <span class="hljs-literal">null</span> | (((handle: mixed) =&gt; <span class="hljs-keyword">void</span>) &amp; {_stringRef: ?string}) | RefObject,
+
+  <span class="hljs-comment">// &#x65B0;&#x7684;&#x53D8;&#x52A8;&#x5E26;&#x6765;&#x7684;&#x65B0;&#x7684;props</span>
+  pendingProps: any, 
+  <span class="hljs-comment">// &#x4E0A;&#x4E00;&#x6B21;&#x6E32;&#x67D3;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x7684;props</span>
+  memoizedProps: any,
+
+  <span class="hljs-comment">// &#x8BE5;Fiber&#x5BF9;&#x5E94;&#x7684;&#x7EC4;&#x4EF6;&#x4EA7;&#x751F;&#x7684;Update&#x4F1A;&#x5B58;&#x653E;&#x5728;&#x8FD9;&#x4E2A;&#x961F;&#x5217;&#x91CC;&#x9762;</span>
+  updateQueue: UpdateQueue&lt;any&gt; | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x4E0A;&#x4E00;&#x6B21;&#x6E32;&#x67D3;&#x7684;&#x65F6;&#x5019;&#x7684;state</span>
+  memoizedState: any,
+
+  <span class="hljs-comment">// &#x4E00;&#x4E2A;&#x5217;&#x8868;&#xFF0C;&#x5B58;&#x653E;&#x8FD9;&#x4E2A;Fiber&#x4F9D;&#x8D56;&#x7684;context</span>
+  firstContextDependency: ContextDependency&lt;mixed&gt; | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x7528;&#x6765;&#x63CF;&#x8FF0;&#x5F53;&#x524D;Fiber&#x548C;&#x4ED6;&#x5B50;&#x6811;&#x7684;`Bitfield`</span>
+  <span class="hljs-comment">// &#x5171;&#x5B58;&#x7684;&#x6A21;&#x5F0F;&#x8868;&#x793A;&#x8FD9;&#x4E2A;&#x5B50;&#x6811;&#x662F;&#x5426;&#x9ED8;&#x8BA4;&#x662F;&#x5F02;&#x6B65;&#x6E32;&#x67D3;&#x7684;</span>
+  <span class="hljs-comment">// Fiber&#x88AB;&#x521B;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x4ED6;&#x4F1A;&#x7EE7;&#x627F;&#x7236;Fiber</span>
+  <span class="hljs-comment">// &#x5176;&#x4ED6;&#x7684;&#x6807;&#x8BC6;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x521B;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x88AB;&#x8BBE;&#x7F6E;</span>
+  <span class="hljs-comment">// &#x4F46;&#x662F;&#x5728;&#x521B;&#x5EFA;&#x4E4B;&#x540E;&#x4E0D;&#x5E94;&#x8BE5;&#x518D;&#x88AB;&#x4FEE;&#x6539;&#xFF0C;&#x7279;&#x522B;&#x662F;&#x4ED6;&#x7684;&#x5B50;Fiber&#x521B;&#x5EFA;&#x4E4B;&#x524D;</span>
+  mode: TypeOfMode,
+
+  <span class="hljs-comment">// Effect</span>
+  <span class="hljs-comment">// &#x7528;&#x6765;&#x8BB0;&#x5F55;Side Effect</span>
+  effectTag: SideEffectTag,
+
+  <span class="hljs-comment">// &#x5355;&#x94FE;&#x8868;&#x7528;&#x6765;&#x5FEB;&#x901F;&#x67E5;&#x627E;&#x4E0B;&#x4E00;&#x4E2A;side effect</span>
+  nextEffect: Fiber | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x5B50;&#x6811;&#x4E2D;&#x7B2C;&#x4E00;&#x4E2A;side effect</span>
+  firstEffect: Fiber | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// &#x5B50;&#x6811;&#x4E2D;&#x6700;&#x540E;&#x4E00;&#x4E2A;side effect</span>
+  lastEffect: Fiber | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x4EE3;&#x8868;&#x4EFB;&#x52A1;&#x5728;&#x672A;&#x6765;&#x7684;&#x54EA;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#x5E94;&#x8BE5;&#x88AB;&#x5B8C;&#x6210;</span>
+  <span class="hljs-comment">// &#x4E0D;&#x5305;&#x62EC;&#x4ED6;&#x7684;&#x5B50;&#x6811;&#x4EA7;&#x751F;&#x7684;&#x4EFB;&#x52A1;</span>
+  expirationTime: ExpirationTime,
+
+  <span class="hljs-comment">// &#x5FEB;&#x901F;&#x786E;&#x5B9A;&#x5B50;&#x6811;&#x4E2D;&#x662F;&#x5426;&#x6709;&#x4E0D;&#x5728;&#x7B49;&#x5F85;&#x7684;&#x53D8;&#x5316;</span>
+  childExpirationTime: ExpirationTime,
+
+  <span class="hljs-comment">// &#x5728;Fiber&#x6811;&#x66F4;&#x65B0;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6BCF;&#x4E2A;Fiber&#x90FD;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x8DDF;&#x5176;&#x5BF9;&#x5E94;&#x7684;Fiber</span>
+  <span class="hljs-comment">// &#x6211;&#x4EEC;&#x79F0;&#x4ED6;&#x4E3A;`current &lt;==&gt; workInProgress`</span>
+  <span class="hljs-comment">// &#x5728;&#x6E32;&#x67D3;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x4ED6;&#x4EEC;&#x4F1A;&#x4EA4;&#x6362;&#x4F4D;&#x7F6E;</span>
+  alternate: Fiber | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x4E0B;&#x9762;&#x662F;&#x8C03;&#x8BD5;&#x76F8;&#x5173;&#x7684;&#xFF0C;&#x6536;&#x96C6;&#x6BCF;&#x4E2A;Fiber&#x548C;&#x5B50;&#x6811;&#x6E32;&#x67D3;&#x65F6;&#x95F4;&#x7684;</span>
+
+  actualDuration?: number,
+
+  <span class="hljs-comment">// If the Fiber is currently active in the &quot;render&quot; phase,</span>
+  <span class="hljs-comment">// This marks the time at which the work began.</span>
+  <span class="hljs-comment">// This field is only set when the enableProfilerTimer flag is enabled.</span>
+  actualStartTime?: number,
+
+  <span class="hljs-comment">// Duration of the most recent render time for this Fiber.</span>
+  <span class="hljs-comment">// This value is not updated when we bailout for memoization purposes.</span>
+  <span class="hljs-comment">// This field is only set when the enableProfilerTimer flag is enabled.</span>
+  selfBaseDuration?: number,
+
+  <span class="hljs-comment">// Sum of base times for all descedents of this Fiber.</span>
+  <span class="hljs-comment">// This value bubbles up during the &quot;complete&quot; phase.</span>
+  <span class="hljs-comment">// This field is only set when the enableProfilerTimer flag is enabled.</span>
+  treeBaseDuration?: number,
+
+  <span class="hljs-comment">// Conceptual aliases</span>
+  <span class="hljs-comment">// workInProgress : Fiber -&gt;  alternate The alternate used for reuse happens</span>
+  <span class="hljs-comment">// to be the same as work in progress.</span>
+  <span class="hljs-comment">// __DEV__ only</span>
+  _debugID?: number,
+  _debugSource?: Source | <span class="hljs-literal">null</span>,
+  _debugOwner?: Fiber | <span class="hljs-literal">null</span>,
+  _debugIsCurrentlyTiming?: boolean,
+|};
+</code></pre>
+<h1 id="effecttags">effectTags</h1>
+<pre><code class="lang-js"><span class="hljs-comment">/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */</span>
+
+<span class="hljs-keyword">export</span> type SideEffectTag = number;
+
+<span class="hljs-comment">// Don&apos;t change these two values. They&apos;re used by React Dev Tools.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> NoEffect = <span class="hljs-comment">/*              */</span> <span class="hljs-number">0b00000000000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> PerformedWork = <span class="hljs-comment">/*         */</span> <span class="hljs-number">0b00000000001</span>;
+
+<span class="hljs-comment">// You can change the rest (and add more).</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Placement = <span class="hljs-comment">/*             */</span> <span class="hljs-number">0b00000000010</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Update = <span class="hljs-comment">/*                */</span> <span class="hljs-number">0b00000000100</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> PlacementAndUpdate = <span class="hljs-comment">/*    */</span> <span class="hljs-number">0b00000000110</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Deletion = <span class="hljs-comment">/*              */</span> <span class="hljs-number">0b00000001000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ContentReset = <span class="hljs-comment">/*          */</span> <span class="hljs-number">0b00000010000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Callback = <span class="hljs-comment">/*              */</span> <span class="hljs-number">0b00000100000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> DidCapture = <span class="hljs-comment">/*            */</span> <span class="hljs-number">0b00001000000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Ref = <span class="hljs-comment">/*                   */</span> <span class="hljs-number">0b00010000000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Snapshot = <span class="hljs-comment">/*              */</span> <span class="hljs-number">0b00100000000</span>;
+
+<span class="hljs-comment">// Update &amp; Callback &amp; Ref &amp; Snapshot</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> LifecycleEffectMask = <span class="hljs-comment">/*   */</span> <span class="hljs-number">0b00110100100</span>;
+
+<span class="hljs-comment">// Union of all host effects</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> HostEffectMask = <span class="hljs-comment">/*        */</span> <span class="hljs-number">0b00111111111</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Incomplete = <span class="hljs-comment">/*            */</span> <span class="hljs-number">0b01000000000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ShouldCapture = <span class="hljs-comment">/*         */</span> <span class="hljs-number">0b10000000000</span>;
+</code></pre>
+<h1 id="reactworktag">ReactWorkTag</h1>
+<pre><code class="lang-js">
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> FunctionComponent = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ClassComponent = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> IndeterminateComponent = <span class="hljs-number">2</span>; <span class="hljs-comment">// Before we know whether it is function or class</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> HostRoot = <span class="hljs-number">3</span>; <span class="hljs-comment">// Root of a host tree. Could be nested inside another node.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> HostPortal = <span class="hljs-number">4</span>; <span class="hljs-comment">// A subtree. Could be an entry point to a different renderer.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> HostComponent = <span class="hljs-number">5</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> HostText = <span class="hljs-number">6</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Fragment = <span class="hljs-number">7</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Mode = <span class="hljs-number">8</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ContextConsumer = <span class="hljs-number">9</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ContextProvider = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ForwardRef = <span class="hljs-number">11</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Profiler = <span class="hljs-number">12</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> SuspenseComponent = <span class="hljs-number">13</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> MemoComponent = <span class="hljs-number">14</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> SimpleMemoComponent = <span class="hljs-number">15</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> LazyComponent = <span class="hljs-number">16</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> IncompleteClassComponent = <span class="hljs-number">17</span>;
+</code></pre>
+<h1 id="sideeffects">sideEffects</h1>
+<pre><code class="lang-js"><span class="hljs-comment">/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */</span>
+
+<span class="hljs-keyword">export</span> type SideEffectTag = number;
+
+<span class="hljs-comment">// Don&apos;t change these two values. They&apos;re used by React Dev Tools.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> NoEffect = <span class="hljs-comment">/*              */</span> <span class="hljs-number">0b00000000000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> PerformedWork = <span class="hljs-comment">/*         */</span> <span class="hljs-number">0b00000000001</span>;
+
+<span class="hljs-comment">// You can change the rest (and add more).</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Placement = <span class="hljs-comment">/*             */</span> <span class="hljs-number">0b00000000010</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Update = <span class="hljs-comment">/*                */</span> <span class="hljs-number">0b00000000100</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> PlacementAndUpdate = <span class="hljs-comment">/*    */</span> <span class="hljs-number">0b00000000110</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Deletion = <span class="hljs-comment">/*              */</span> <span class="hljs-number">0b00000001000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ContentReset = <span class="hljs-comment">/*          */</span> <span class="hljs-number">0b00000010000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Callback = <span class="hljs-comment">/*              */</span> <span class="hljs-number">0b00000100000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> DidCapture = <span class="hljs-comment">/*            */</span> <span class="hljs-number">0b00001000000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Ref = <span class="hljs-comment">/*                   */</span> <span class="hljs-number">0b00010000000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Snapshot = <span class="hljs-comment">/*              */</span> <span class="hljs-number">0b00100000000</span>;
+
+<span class="hljs-comment">// Update &amp; Callback &amp; Ref &amp; Snapshot</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> LifecycleEffectMask = <span class="hljs-comment">/*   */</span> <span class="hljs-number">0b00110100100</span>;
+
+<span class="hljs-comment">// Union of all host effects</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> HostEffectMask = <span class="hljs-comment">/*        */</span> <span class="hljs-number">0b00111111111</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Incomplete = <span class="hljs-comment">/*            */</span> <span class="hljs-number">0b01000000000</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ShouldCapture = <span class="hljs-comment">/*         */</span> <span class="hljs-number">0b10000000000</span>;
+</code></pre>
+<h1 id="update--updatequeue">Update &amp; UpdateQueue</h1>
+<pre><code class="lang-js"><span class="hljs-keyword">export</span> type Update&lt;State&gt; = {
+  <span class="hljs-comment">// &#x66F4;&#x65B0;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;</span>
+  expirationTime: ExpirationTime,
+
+  <span class="hljs-comment">// export const UpdateState = 0;</span>
+  <span class="hljs-comment">// export const ReplaceState = 1;</span>
+  <span class="hljs-comment">// export const ForceUpdate = 2;</span>
+  <span class="hljs-comment">// export const CaptureUpdate = 3;</span>
+  <span class="hljs-comment">// &#x6307;&#x5B9A;&#x66F4;&#x65B0;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x503C;&#x4E3A;&#x4EE5;&#x4E0A;&#x51E0;&#x79CD;</span>
+  tag: <span class="hljs-number">0</span> | <span class="hljs-number">1</span> | <span class="hljs-number">2</span> | <span class="hljs-number">3</span>,
+  <span class="hljs-comment">// &#x66F4;&#x65B0;&#x5185;&#x5BB9;&#xFF0C;&#x6BD4;&#x5982;`setState`&#x63A5;&#x6536;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;</span>
+  payload: any,
+  <span class="hljs-comment">// &#x5BF9;&#x5E94;&#x7684;&#x56DE;&#x8C03;&#xFF0C;`setState`&#xFF0C;`render`&#x90FD;&#x6709;</span>
+  callback: (() =&gt; mixed) | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x6307;&#x5411;&#x4E0B;&#x4E00;&#x4E2A;&#x66F4;&#x65B0;</span>
+  next: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// &#x6307;&#x5411;&#x4E0B;&#x4E00;&#x4E2A;`side effect`</span>
+  nextEffect: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+};
+
+<span class="hljs-keyword">export</span> type UpdateQueue&lt;State&gt; = {
+  <span class="hljs-comment">// &#x6BCF;&#x6B21;&#x64CD;&#x4F5C;&#x5B8C;&#x66F4;&#x65B0;&#x4E4B;&#x540E;&#x7684;`state`</span>
+  baseState: State,
+
+  <span class="hljs-comment">// &#x961F;&#x5217;&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;`Update`</span>
+  firstUpdate: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// &#x961F;&#x5217;&#x4E2D;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;`Update`</span>
+  lastUpdate: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x7B2C;&#x4E00;&#x4E2A;&#x6355;&#x83B7;&#x7C7B;&#x578B;&#x7684;`Update`</span>
+  firstCapturedUpdate: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// &#x6700;&#x540E;&#x4E00;&#x4E2A;&#x6355;&#x83B7;&#x7C7B;&#x578B;&#x7684;`Update`</span>
+  lastCapturedUpdate: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x7B2C;&#x4E00;&#x4E2A;`side effect`</span>
+  firstEffect: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+  <span class="hljs-comment">// &#x6700;&#x540E;&#x4E00;&#x4E2A;`side effect`</span>
+  lastEffect: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+
+  <span class="hljs-comment">// &#x7B2C;&#x4E00;&#x4E2A;&#x548C;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x6355;&#x83B7;&#x4EA7;&#x751F;&#x7684;`side effect`</span>
+  firstCapturedEffect: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+  lastCapturedEffect: Update&lt;State&gt; | <span class="hljs-literal">null</span>,
+};
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+<div id="QR" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin: 20px; margin-top: 40px; padding-top: 20px; border: 2px solid #ea8;">
+  <img
+    src="https://static.coursebetter.com/202112/Jokcy%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81.png"
+    alt="Jokcy的二维码"
+    width="200px"
+  />
+  <p style="padding: 20px; font-size: 16px; color: #d81665; font-weight: bold;">
+    扫码添加Jokcy，更多更新更优质的前端学习内容不断更新中，期待与你一起成长！
+  </p>
+</div>
+<div style="position: fixed; right: 0; bottom: 100px; cursor: pointer; width: 60px; background-color: #fff;" id="floatQR">
+  <p id="qr-text" style="padding: 20px; font-size: 12px; color: #d81665; font-weight: bold; display: none; margin: 0; padding: 3px 10px;">
+    扫码添加Jokcy，更多更新更优质的前端学习内容不断更新中，期待与你一起成长！
+  </p>
+  <img
+    src="https://static.coursebetter.com/202112/Jokcy%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81.png"
+    alt="Jokcy的二维码"
+    width="100%"
+  />
+</div>
+
+<script>
+  let timer
+    document.querySelector('#floatQR').addEventListener('mouseover', () => {
+      $('#floatQR').animate({
+        width: '300px'
+      })
+      timer = setTimeout(() => {
+        $('#qr-text').show()
+      }, 600)
+    })
+
+    document.querySelector('#floatQR').addEventListener('mouseleave', () => {
+      clearTimeout(timer)
+      $('#floatQR').animate({
+        width: '60px'
+      })
+      $('#qr-text').hide()
+    })
+</script>
+
+                        </div>
+                    </div>
+                
+<div id="disqus_thread"></div>
+<script>
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+  ;(function() {
+    // DON'T EDIT BELOW THIS LINE
+    var d = document,
+      s = d.createElement('script')
+    s.src = 'https://react-source-code.disqus.com/embed.js'
+    s.setAttribute('data-timestamp', +new Date())
+    ;(d.head || d.body).appendChild(s)
+  })()
+</script>
+<noscript
+  >Please enable JavaScript to view the
+  <a href="https://disqus.com/?ref_noscript"
+    >comments powered by Disqus.</a
+  ></noscript
+>
+
+            </div>
+
+            
+
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"React 中的数据结构","level":"1.2.4","depth":2,"next":{"title":"创建更新","level":"1.3","depth":1,"ref":"","articles":[{"title":"ReactDOM.render","level":"1.3.1","depth":2,"path":"book/update/react-dom-render.md","ref":"book/update/react-dom-render.md","articles":[]},{"title":"setState & forceUpdate","level":"1.3.2","depth":2,"path":"book/update/set-state.md","ref":"book/update/set-state.md","articles":[]},{"title":"expirationTime 计算","level":"1.3.3","depth":2,"path":"book/update/expiration-time.md","ref":"book/update/expiration-time.md","articles":[]}]},"previous":{"title":"React Children","level":"1.2.3","depth":2,"path":"book/api/react-children.md","ref":"book/api/react-children.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-api"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":true,"instapaper":false,"vk":false,"all":["weibo","google","twitter","weibo","instapaper"]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-api":{"languages":[],"split":true,"theme":"light"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React源码解析","language":"zh-hans","gitbook":"*"},"file":{"path":"book/api/react-structure.md","mtime":"2023-08-03T04:41:57.875Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-08-03T05:35:59.106Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

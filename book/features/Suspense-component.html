@@ -1,0 +1,1470 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Suspense · React源码解析</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../styles/website.css">
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+         
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="suspense.html" />
+    
+    
+    <link rel="prev" href="event-create-event-object.html" />
+    
+
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=UA-49483742-5"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || []
+  function gtag() {
+    dataLayer.push(arguments)
+  }
+  gtag('js', new Date())
+
+  gtag('config', 'UA-49483742-5')
+</script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    <li>
+        <a href="https://vue3.w2deep.com" target="_blank" class="custom-link" style="background: #3eaf7c; color: #efefef; margin-top: -10px;">新鲜的vue3源码解析</a>
+    </li>
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    首页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../api/react.html">
+            
+                <a href="../api/react.html">
+            
+                    
+                    React API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../api/react-element.html">
+            
+                <a href="../api/react-element.html">
+            
+                    
+                    ReactElement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../api/react-children.html">
+            
+                <a href="../api/react-children.html">
+            
+                    
+                    React Children
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../api/react-structure.html">
+            
+                <a href="../api/react-structure.html">
+            
+                    
+                    React 中的数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    创建更新
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../update/react-dom-render.html">
+            
+                <a href="../update/react-dom-render.html">
+            
+                    
+                    ReactDOM.render
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../update/set-state.html">
+            
+                <a href="../update/set-state.html">
+            
+                    
+                    setState & forceUpdate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../update/expiration-time.html">
+            
+                <a href="../update/expiration-time.html">
+            
+                    
+                    expirationTime 计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    任务调度
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../flow/scheduler-global.html">
+            
+                <a href="../flow/scheduler-global.html">
+            
+                    
+                    全局变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../flow/schedule-work.html">
+            
+                <a href="../flow/schedule-work.html">
+            
+                    
+                    scheduleWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../flow/scheduler-pkg.html">
+            
+                <a href="../flow/scheduler-pkg.html">
+            
+                    
+                    react-scheduler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../flow/perform-work.html">
+            
+                <a href="../flow/perform-work.html">
+            
+                    
+                    performWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../flow/perform-unit-of-work.html">
+            
+                <a href="../flow/perform-unit-of-work.html">
+            
+                    
+                    performUnitOfWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../flow/render-root.html">
+            
+                <a href="../flow/render-root.html">
+            
+                    
+                    renderRoot
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.6.1" data-path="../flow/render-root/throw-exception.html">
+            
+                <a href="../flow/render-root/throw-exception.html">
+            
+                    
+                    throwException
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../flow/begin-work.html">
+            
+                <a href="../flow/begin-work.html">
+            
+                    
+                    beginWork
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.7.1" data-path="../flow/begin-work/mount-indeterminate-component.html">
+            
+                <a href="../flow/begin-work/mount-indeterminate-component.html">
+            
+                    
+                    mountIndeterminateComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.2" data-path="../flow/begin-work/mount-lazy-component.html">
+            
+                <a href="../flow/begin-work/mount-lazy-component.html">
+            
+                    
+                    mountLazyComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.3" data-path="../flow/begin-work/update-functional-component.html">
+            
+                <a href="../flow/begin-work/update-functional-component.html">
+            
+                    
+                    updateFunctionalComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.4" data-path="../flow/begin-work/update-class-component.html">
+            
+                <a href="../flow/begin-work/update-class-component.html">
+            
+                    
+                    updateClassComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.5" data-path="../flow/begin-work/update-host-root.html">
+            
+                <a href="../flow/begin-work/update-host-root.html">
+            
+                    
+                    updateHostRoot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.6" data-path="../flow/begin-work/update-host-component.html">
+            
+                <a href="../flow/begin-work/update-host-component.html">
+            
+                    
+                    updateHostComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.7" data-path="../flow/begin-work/update-host-text.html">
+            
+                <a href="../flow/begin-work/update-host-text.html">
+            
+                    
+                    updateHostText
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.8" data-path="../feature/Suspense-component.md">
+            
+                <span>
+            
+                    
+                    updateSuspenseComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.9" data-path="../flow/begin-work/update-portal-component.html">
+            
+                <a href="../flow/begin-work/update-portal-component.html">
+            
+                    
+                    updatePortalComponent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.10" data-path="../flow/begin-work/update-forward-ref.html">
+            
+                <a href="../flow/begin-work/update-forward-ref.html">
+            
+                    
+                    updateForwardRef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.11" data-path="../flow/begin-work/update-fragment.html">
+            
+                <a href="../flow/begin-work/update-fragment.html">
+            
+                    
+                    updateFragment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.12" data-path="../flow/begin-work/update-mode.html">
+            
+                <a href="../flow/begin-work/update-mode.html">
+            
+                    
+                    updateMode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.13" data-path="../flow/begin-work/update-profiler.html">
+            
+                <a href="../flow/begin-work/update-profiler.html">
+            
+                    
+                    updateProfiler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.14" data-path="../flow/begin-work/update-context-provider.html">
+            
+                <a href="../flow/begin-work/update-context-provider.html">
+            
+                    
+                    updateContextProvider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7.15" data-path="../flow/begin-work/update-context-consumer.html">
+            
+                <a href="../flow/begin-work/update-context-consumer.html">
+            
+                    
+                    updateContextConsumer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../flow/reconcile-children.html">
+            
+                <a href="../flow/reconcile-children.html">
+            
+                    
+                    reconcileChildren
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.8.1" data-path="../flow/reconcile-children/single.html">
+            
+                <a href="../flow/reconcile-children/single.html">
+            
+                    
+                    调和单个节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8.2" data-path="../flow/reconcile-children/array.html">
+            
+                <a href="../flow/reconcile-children/array.html">
+            
+                    
+                    调和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    commit 阶段
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../commit-phase/commit-root.html">
+            
+                <a href="../commit-phase/commit-root.html">
+            
+                    
+                    commitRoot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../commit-phase/invokeGuardedCallback.html">
+            
+                <a href="../commit-phase/invokeGuardedCallback.html">
+            
+                    
+                    invokeGuardedCallback
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../commit-phase/commitBeforeMutationLifecycles.html">
+            
+                <a href="../commit-phase/commitBeforeMutationLifecycles.html">
+            
+                    
+                    commitBeforeMutationLifecycles
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../commit-phase/commit-all-host-effects.html">
+            
+                <a href="../commit-phase/commit-all-host-effects.html">
+            
+                    
+                    commitAllHostEffects
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.4.1" data-path="../commit-phase/host-effects/CommitPlacement.html">
+            
+                <a href="../commit-phase/host-effects/CommitPlacement.html">
+            
+                    
+                    commitPlacement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.2" data-path="../commit-phase/host-effects/CommitWork.html">
+            
+                <a href="../commit-phase/host-effects/CommitWork.html">
+            
+                    
+                    commitWork
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4.3" data-path="../commit-phase/host-effects/CommitDeletion.html">
+            
+                <a href="../commit-phase/host-effects/CommitDeletion.html">
+            
+                    
+                    commitDeletion
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../commit-phase/commit-all-lifecycles.html">
+            
+                <a href="../commit-phase/commit-all-lifecycles.html">
+            
+                    
+                    commitAllLifecycle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    功能
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="context.html">
+            
+                <a href="context.html">
+            
+                    
+                    context
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="hydrate.html">
+            
+                <a href="hydrate.html">
+            
+                    
+                    hydrate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="ref.html">
+            
+                <a href="ref.html">
+            
+                    
+                    ref
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="event-injection.html">
+            
+                <a href="event-injection.html">
+            
+                    
+                    事件系统初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="event-bind.html">
+            
+                <a href="event-bind.html">
+            
+                    
+                    事件绑定
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="event-dispatch.html">
+            
+                <a href="event-dispatch.html">
+            
+                    
+                    事件触发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="event-create-event-object.html">
+            
+                <a href="event-create-event-object.html">
+            
+                    
+                    事件对象生成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6.8" data-path="Suspense-component.html">
+            
+                <a href="Suspense-component.html">
+            
+                    
+                    Suspense
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="suspense.html">
+            
+                <a href="suspense.html">
+            
+                    
+                    挂起任务的含义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.10" data-path="suspense-lazy.html">
+            
+                <a href="suspense-lazy.html">
+            
+                    
+                    lazy 组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    Hooks
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../hooks/hooks-start.html">
+            
+                <a href="../hooks/hooks-start.html">
+            
+                    
+                    开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../hooks/hooks-use-state.html">
+            
+                <a href="../hooks/hooks-use-state.html">
+            
+                    
+                    useState
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../hooks/hooks-use-effect.html">
+            
+                <a href="../hooks/hooks-use-effect.html">
+            
+                    
+                    useEffect
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../hooks/hooks-others.html">
+            
+                <a href="../hooks/hooks-others.html">
+            
+                    
+                    其他API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../hooks/hooks-common.html">
+            
+                <a href="../hooks/hooks-common.html">
+            
+                    
+                    通用API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <form
+            action="https://buttondown.email/api/emails/embed-subscribe/Jokcy"
+            method="post"
+            target="popupwindow"
+            onsubmit="window.open('https://buttondown.email/Jokcy', 'popupwindow')"
+            class="buttondown-form"
+            >
+            <input type="email" name="email" id="bd-email" placeholder="(your@email.com)">
+            <input type="hidden" value="1" name="embed"/>
+            <button type="submit">订阅我</button>
+        </form>
+    </li>
+</ul>
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                 
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Suspense</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="suspense-&#x7EC4;&#x4EF6;">Suspense &#x7EC4;&#x4EF6;</h1>
+<div class="api-method"><div class="api-method-definition"><h1 id="&#x66F4;&#x65B0;">&#x66F4;&#x65B0;</h1>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x7EC4;&#x4EF6;&#x7684;<code>state</code>&#x4F1A;&#x5177;&#x6709;&#x54EA;&#x4E9B;&#x5C5E;&#x6027;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">export</span> type SuspenseState = {|
+  alreadyCaptured: boolean,
+  didTimeout: boolean,
+  timedOutAt: ExpirationTime,
+|}
+</code></pre>
+<p>&#x8FD9;&#x4E09;&#x4E2A;&#x5C5E;&#x6027;&#x5206;&#x522B;&#x7684;&#x7528;&#x5904;&#x662F;&#xFF1A;</p>
+<ul>
+<li><code>alreadyCaptured</code>&#x6807;&#x5FD7;&#x662F;&#x5426;&#x5B50;&#x6811;&#x4E2D;&#x5DF2;&#x7ECF;&#x6302;&#x8D77;&#x4E86;</li>
+<li><code>didTimeout</code>&#x6807;&#x5FD7;&#x73B0;&#x5728;&#x662F;&#x6E32;&#x67D3;&#x7684;&#x4E3B;&#x8981;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x8FD8;&#x662F;<code>fallback</code>&#x8282;&#x70B9;&#x3002;&#x8FD9;&#x4E2A;&#x4E3B;&#x8981;&#x662F;&#x5728;&#x975E;<code>ConcurrentMode</code>&#x4E2D;&#x7528;&#x5230;</li>
+<li><code>timedOutAt</code>&#x5728;&#x6BCF;&#x6B21;&#x8BE5;&#x7EC4;&#x4EF6;&#x88AB;<code>commit</code>&#x7684;&#x65F6;&#x5019;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A;&#x5F53;&#x65F6;&#x7684;&#x65F6;&#x95F4;</li>
+</ul>
+<p>&#x9996;&#x5148;&#xFF0C;&#x7B2C;&#x4E00;&#x6B21;&#x6E32;&#x67D3;&#x8BE5;&#x7EC4;&#x4EF6;&#x7684;&#x65F6;&#x5019;&#xFF0C;<code>state</code>&#x80AF;&#x5B9A;&#x7B49;&#x4E8E;<code>null</code>&#xFF0C;&#x6240;&#x4EE5;<code>nextDidTimeout</code>&#x662F;<code>false</code>&#xFF0C;&#x800C;&#x4E14;<code>current</code>&#x662F;<code>null</code>&#xFF0C;&#x8D70;&#x7684;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;&#x6D41;&#x7A0B;&#xFF1A;</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Mount the primary children without an intermediate fragment fiber.</span>
+<span class="hljs-keyword">const</span> nextPrimaryChildren = nextProps.children
+child = next = mountChildFibers(
+  workInProgress,
+  <span class="hljs-literal">null</span>,
+  nextPrimaryChildren,
+  renderExpirationTime,
+)
+</code></pre>
+<p>&#x8D70;&#x6B63;&#x5E38;&#x6E32;&#x67D3;&#x3002;&#x800C;&#x5982;&#x679C;&#x8FD9;&#x65F6;&#x5019;&#x5B50;&#x6811;<code>throw promise</code>&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4F1A;&#x5230;<code>throwException</code>&#x7684;&#x6D41;&#x7A0B;&#xFF0C;&#x5728;<code>throwException</code>&#x4E2D;&#x505A;&#x4E86;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;</p>
+<h3 id="&#x5BF9;&#x4E8E;&#x540C;&#x6B65;&#x7684;&#x60C5;&#x51B5;">&#x5BF9;&#x4E8E;&#x540C;&#x6B65;&#x7684;&#x60C5;&#x51B5;</h3>
+<p>&#x7ED9;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#x589E;&#x52A0;<code>Callback</code>&#x526F;&#x4F5C;&#x7528;&#xFF0C;&#x6CA1;&#x6709;<code>ShouldCapture</code></p>
+<p>&#x6240;&#x4EE5;&#x8BE5;&#x7EC4;&#x4EF6;&#x5728;&#x540E;&#x7EED;<code>unwindWork</code>&#x7684;&#x65F6;&#x5019;&#x4EC0;&#x4E48;&#x90FD;&#x4E0D;&#x505A;&#xFF0C;&#x8FD9;&#x4E00;&#x6B21;&#x6E32;&#x67D3;&#x5C31;&#x8FD9;&#x4E48;&#x7ED3;&#x675F;&#x4E86;&#xFF0C;&#x90A3;&#x4E48;&#x540C;&#x5B66;&#x4EEC;&#x80AF;&#x5B9A;&#x8981;&#x95EE;&#x4E86;&#xFF0C;&#x8FD9;&#x6CA1;&#x6709;&#x6E32;&#x67D3;&#x51FA;<code>fallback</code>&#x554A;&#x3002;&#x662F;&#x7684;&#xFF0C;&#x8FD9;&#x4E2A;&#x6B65;&#x9AA4;&#x8981;&#x7B49;&#x5230;&#x4E0B;&#x4E00;&#x6B21;<code>commit</code></p>
+<p>&#x56E0;&#x4E3A;&#x589E;&#x52A0;<code>Callback</code>&#x6240;&#x4EE5;&#x8FD9;&#x4E2A;&#x7EC4;&#x4EF6;&#x5728;<code>commitLifecycle</code>&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x88AB;&#x63D0;&#x4EA4;&#xFF0C;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">if</span> (finishedWork.effectTag &amp; Callback) {
+  <span class="hljs-keyword">const</span> newState: SuspenseState = {
+    alreadyCaptured: <span class="hljs-literal">true</span>,
+    didTimeout: <span class="hljs-literal">false</span>,
+    timedOutAt: NoWork,
+  }
+  finishedWork.memoizedState = newState
+  scheduleWork(finishedWork, Sync)
+  <span class="hljs-keyword">return</span>
+}
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4ED6;&#x7684;<code>state</code>&#x88AB;&#x7B2C;&#x4E00;&#x6B21;&#x8BBE;&#x7F6E;&#x4E86;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x8BE5;&#x8282;&#x70B9;&#x4E0A;&#x53D1;&#x8D77;&#x4E86;&#x4E00;&#x6B21;&#x540C;&#x6B65;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x800C;&#x4E0B;&#x4E00;&#x6B21;&#x66F4;&#x65B0;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4ED6;&#x7684;<code>state</code>&#x5C31;&#x662F;&#x8FD9;&#x91CC;&#x7684;<code>newState</code>&#x3002;&#x8FD9;&#x6B21;&#x66F4;&#x65B0;&#x7684;&#x65F6;&#x5019;&#xFF0C;<code>didTimeout</code>&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A;<code>true</code>&#xFF0C;&#x90A3;&#x4E48;<code>nextDidTimeout</code>&#x4E5F;&#x662F;<code>true</code>&#xFF0C;&#x540C;&#x65F6;&#x7ECF;&#x8FC7;&#x4E0A;&#x4E00;&#x6B21;&#x63D0;&#x4EA4;&#xFF0C;<code>current</code>&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x3002;</p>
+<h3 id="&#x5BF9;&#x4E8E;&#x5F02;&#x6B65;&#x7684;&#x60C5;&#x51B5;">&#x5BF9;&#x4E8E;&#x5F02;&#x6B65;&#x7684;&#x60C5;&#x51B5;</h3>
+<p>&#x589E;&#x52A0;<code>ShouldCapture</code>&#x5E76;&#x4E14;&#x8BBE;&#x7F6E;<code>expirationTime</code>&#x4E3A;<code>renderExpirationTime</code>&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x540E;&#x9762;<code>retry</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;&#x8BE5;&#x7EC4;&#x4EF6;&#x88AB;&#x66F4;&#x65B0;&#x3002;&#x5E76;&#x4E14;&#x8BA1;&#x7B97;&#x4E86;<code>nextLatestAbsoluteTimeoutMs</code>&#x6765;&#x67E5;&#x770B;&#x4F55;&#x65F6;&#x9700;&#x8981;<code>commit</code>&#x8FD9;&#x4E2A;&#x88AB;&#x6302;&#x8D77;&#x7684;&#x63D0;&#x4EA4;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;&#x6709;&#x4E86;<code>ShouldCapture</code>&#xFF0C;&#x6240;&#x4EE5;&#x5728;<code>unwindWork</code>&#x4E2D;&#x4F1A;&#x66F4;&#x65B0;<code>state</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">if</span> (effectTag &amp; ShouldCapture) {
+  workInProgress.effectTag = (effectTag &amp; ~ShouldCapture) | DidCapture
+  <span class="hljs-keyword">const</span> current = workInProgress.alternate
+  <span class="hljs-keyword">const</span> currentState: SuspenseState | <span class="hljs-literal">null</span> =
+    current !== <span class="hljs-literal">null</span> ? current.memoizedState : <span class="hljs-literal">null</span>
+  <span class="hljs-keyword">let</span> nextState: SuspenseState | <span class="hljs-literal">null</span> = workInProgress.memoizedState
+  <span class="hljs-keyword">if</span> (nextState === <span class="hljs-literal">null</span>) {
+    <span class="hljs-comment">// No existing state. Create a new object.</span>
+    nextState = {
+      alreadyCaptured: <span class="hljs-literal">true</span>,
+      didTimeout: <span class="hljs-literal">false</span>,
+      timedOutAt: NoWork,
+    }
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (currentState === nextState) {
+    <span class="hljs-comment">// There is an existing state but it&apos;s the same as the current tree&apos;s.</span>
+    <span class="hljs-comment">// Clone the object.</span>
+    nextState = {
+      alreadyCaptured: <span class="hljs-literal">true</span>,
+      didTimeout: nextState.didTimeout,
+      timedOutAt: nextState.timedOutAt,
+    }
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Already have a clone, so it&apos;s safe to mutate.</span>
+    nextState.alreadyCaptured = <span class="hljs-literal">true</span>
+  }
+  workInProgress.memoizedState = nextState
+  <span class="hljs-comment">// Re-render the boundary.</span>
+  <span class="hljs-keyword">return</span> workInProgress
+}
+</code></pre>
+<p>&#x8BBE;&#x7F6E;&#x4E86;<code>alreadyCaptured</code>&#x4E3A;<code>true</code>&#xFF0C;&#x6765;&#x6E32;&#x67D3;<code>fallback</code>&#xFF0C;&#x540C;&#x65F6;&#x7EE7;&#x7EED;&#x6CBF;&#x7528;&#x4E4B;&#x524D;&#x7684;<code>didTimeout</code>&#xFF0C;&#x5982;&#x679C;&#x4E0A;&#x4E00;&#x6B21;&#x6E32;&#x67D3;&#x5DF2;&#x7ECF;&#x88AB;&#x6302;&#x8D77;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x6B21;&#x7EE7;&#x7EED;&#x6302;&#x8D77;&#xFF0C;&#x8FD9;&#x5728;<code>updateSuspenseComponent</code>&#x4F7F;&#x7528;<code>prevDidTimeout</code>&#x548C;<code>nextDidTimeout</code>&#x6765;&#x8FDB;&#x884C;&#x533A;&#x5206;&#x3002;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x5728;&#x4E8E;&#x662F;&#x5426;&#x8981;&#x91CD;&#x65B0;&#x6784;&#x5EFA;<code>FragmentFiber</code></p>
+<h3 id="completework">completeWork</h3>
+<p>&#x5BF9;&#x4E8E;&#x524D;&#x540E;&#x4E24;&#x6B21;<code>didTimeout</code>&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x4F1A;&#x4E3A;&#x8BE5;&#x8282;&#x70B9;&#x8BBE;&#x7F6E;<code>Update</code>&#x526F;&#x4F5C;&#x7528;&#xFF0C;&#x5728;<code>commitLifecycles</code>&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">case</span> SuspenseComponent: {
+  <span class="hljs-keyword">const</span> nextState = workInProgress.memoizedState;
+  <span class="hljs-keyword">const</span> prevState = current !== <span class="hljs-literal">null</span> ? current.memoizedState : <span class="hljs-literal">null</span>;
+  <span class="hljs-keyword">const</span> nextDidTimeout = nextState !== <span class="hljs-literal">null</span> &amp;&amp; nextState.didTimeout;
+  <span class="hljs-keyword">const</span> prevDidTimeout = prevState !== <span class="hljs-literal">null</span> &amp;&amp; prevState.didTimeout;
+  <span class="hljs-keyword">if</span> (nextDidTimeout !== prevDidTimeout) {
+    <span class="hljs-comment">// If this render commits, and it switches between the normal state</span>
+    <span class="hljs-comment">// and the timed-out state, schedule an effect.</span>
+    workInProgress.effectTag |= Update;
+  }
+  <span class="hljs-keyword">break</span>;
+}
+</code></pre>
+<p>&#x53EA;&#x6709;&#x5728;&#x524D;&#x540E;<code>didTimeout</code>&#x4E0D;&#x540C;&#x7684;&#x65F6;&#x5019;&#x624D;&#x4F1A;&#x589E;&#x52A0;<code>Update</code></p>
+<pre><code class="lang-js">newDidTimeout = newState.didTimeout
+<span class="hljs-keyword">if</span> (newDidTimeout) {
+  primaryChildParent = finishedWork.child
+  newState.alreadyCaptured = <span class="hljs-literal">false</span>
+  <span class="hljs-keyword">if</span> (newState.timedOutAt === NoWork) {
+    newState.timedOutAt = requestCurrentTime()
+  }
+}
+</code></pre>
+<p>&#x7ECF;&#x8FC7;&#x8FD9;&#x6837;&#x4E4B;&#x540E;&#xFF0C;&#x5728;&#x4E0B;&#x4E00;&#x6B21;&#x66F4;&#x65B0;<code>SuspenseComponent</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;<code>nextState</code>&#x5C31;&#x7B49;&#x4E8E;<code>null</code></p>
+</div><div class="api-method-code"><div class="api-method-sample" data-lang="js" data-name="JavaScript"><pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateSuspenseComponent</span>(<span class="hljs-params">
+  current,
+  workInProgress,
+  renderExpirationTime,
+</span>) </span>{
+  <span class="hljs-keyword">const</span> mode = workInProgress.mode
+  <span class="hljs-keyword">const</span> nextProps = workInProgress.pendingProps
+
+  <span class="hljs-comment">// We should attempt to render the primary children unless this boundary</span>
+  <span class="hljs-comment">// already suspended during this render (`alreadyCaptured` is true).</span>
+  <span class="hljs-keyword">let</span> nextState: SuspenseState | <span class="hljs-literal">null</span> = workInProgress.memoizedState
+  <span class="hljs-keyword">if</span> (nextState === <span class="hljs-literal">null</span>) {
+    <span class="hljs-comment">// An empty suspense state means this boundary has not yet timed out.</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">if</span> (!nextState.alreadyCaptured) {
+      <span class="hljs-comment">// Since we haven&apos;t already suspended during this commit, clear the</span>
+      <span class="hljs-comment">// existing suspense state. We&apos;ll try rendering again.</span>
+      nextState = <span class="hljs-literal">null</span>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-comment">// Something in this boundary&apos;s subtree already suspended. Switch to</span>
+      <span class="hljs-comment">// rendering the fallback children. Set `alreadyCaptured` to true.</span>
+      <span class="hljs-keyword">if</span> (current !== <span class="hljs-literal">null</span> &amp;&amp; nextState === current.memoizedState) {
+        <span class="hljs-comment">// Create a new suspense state to avoid mutating the current tree&apos;s.</span>
+        nextState = {
+          alreadyCaptured: <span class="hljs-literal">true</span>,
+          didTimeout: <span class="hljs-literal">true</span>,
+          timedOutAt: nextState.timedOutAt,
+        }
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// Already have a clone, so it&apos;s safe to mutate.</span>
+        nextState.alreadyCaptured = <span class="hljs-literal">true</span>
+        nextState.didTimeout = <span class="hljs-literal">true</span>
+      }
+    }
+  }
+  <span class="hljs-keyword">const</span> nextDidTimeout = nextState !== <span class="hljs-literal">null</span> &amp;&amp; nextState.didTimeout
+
+  <span class="hljs-keyword">let</span> child
+  <span class="hljs-keyword">let</span> next
+  <span class="hljs-keyword">if</span> (current === <span class="hljs-literal">null</span>) {
+    <span class="hljs-keyword">if</span> (nextDidTimeout) {
+      <span class="hljs-comment">// Mount separate fragments for primary and fallback children.</span>
+      <span class="hljs-keyword">const</span> nextFallbackChildren = nextProps.fallback
+      <span class="hljs-keyword">const</span> primaryChildFragment = createFiberFromFragment(
+        <span class="hljs-literal">null</span>,
+        mode,
+        NoWork,
+        <span class="hljs-literal">null</span>,
+      )
+      <span class="hljs-keyword">const</span> fallbackChildFragment = createFiberFromFragment(
+        nextFallbackChildren,
+        mode,
+        renderExpirationTime,
+        <span class="hljs-literal">null</span>,
+      )
+      primaryChildFragment.sibling = fallbackChildFragment
+      child = primaryChildFragment
+      <span class="hljs-comment">// Skip the primary children, and continue working on the</span>
+      <span class="hljs-comment">// fallback children.</span>
+      next = fallbackChildFragment
+      child.return = next.return = workInProgress
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-comment">// Mount the primary children without an intermediate fragment fiber.</span>
+      <span class="hljs-keyword">const</span> nextPrimaryChildren = nextProps.children
+      child = next = mountChildFibers(
+        workInProgress,
+        <span class="hljs-literal">null</span>,
+        nextPrimaryChildren,
+        renderExpirationTime,
+      )
+    }
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// This is an update. This branch is more complicated because we need to</span>
+    <span class="hljs-comment">// ensure the state of the primary children is IncompleteClassComponent.</span>
+    <span class="hljs-keyword">const</span> prevState = current.memoizedState
+    <span class="hljs-keyword">const</span> prevDidTimeout = prevState !== <span class="hljs-literal">null</span> &amp;&amp; prevState.didTimeout
+    <span class="hljs-keyword">if</span> (prevDidTimeout) {
+      <span class="hljs-comment">// The current tree already timed out. That means each child set is</span>
+      <span class="hljs-comment">// wrapped in a fragment fiber.</span>
+      <span class="hljs-keyword">const</span> currentPrimaryChildFragment: Fiber = (current.child: any)
+      <span class="hljs-keyword">const</span> currentFallbackChildFragment: Fiber = (currentPrimaryChildFragment.sibling: any)
+      <span class="hljs-keyword">if</span> (nextDidTimeout) {
+        <span class="hljs-comment">// Still timed out. Reuse the current primary children by cloning</span>
+        <span class="hljs-comment">// its fragment. We&apos;re going to skip over these entirely.</span>
+        <span class="hljs-keyword">const</span> nextFallbackChildren = nextProps.fallback
+        <span class="hljs-keyword">const</span> primaryChildFragment = createWorkInProgress(
+          currentPrimaryChildFragment,
+          currentPrimaryChildFragment.pendingProps,
+          NoWork,
+        )
+        primaryChildFragment.effectTag |= Placement
+        <span class="hljs-comment">// Clone the fallback child fragment, too. These we&apos;ll continue</span>
+        <span class="hljs-comment">// working on.</span>
+        <span class="hljs-keyword">const</span> fallbackChildFragment = (primaryChildFragment.sibling = createWorkInProgress(
+          currentFallbackChildFragment,
+          nextFallbackChildren,
+          currentFallbackChildFragment.expirationTime,
+        ))
+        fallbackChildFragment.effectTag |= Placement
+        child = primaryChildFragment
+        primaryChildFragment.childExpirationTime = NoWork
+        <span class="hljs-comment">// Skip the primary children, and continue working on the</span>
+        <span class="hljs-comment">// fallback children.</span>
+        next = fallbackChildFragment
+        child.return = next.return = workInProgress
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// No longer suspended. Switch back to showing the primary children,</span>
+        <span class="hljs-comment">// and remove the intermediate fragment fiber.</span>
+        <span class="hljs-keyword">const</span> nextPrimaryChildren = nextProps.children
+        <span class="hljs-keyword">const</span> currentPrimaryChild = currentPrimaryChildFragment.child
+        <span class="hljs-keyword">const</span> currentFallbackChild = currentFallbackChildFragment.child
+        <span class="hljs-keyword">const</span> primaryChild = reconcileChildFibers(
+          workInProgress,
+          currentPrimaryChild,
+          nextPrimaryChildren,
+          renderExpirationTime,
+        )
+        <span class="hljs-comment">// Delete the fallback children.</span>
+        reconcileChildFibers(
+          workInProgress,
+          currentFallbackChild,
+          <span class="hljs-literal">null</span>,
+          renderExpirationTime,
+        )
+        <span class="hljs-comment">// Continue rendering the children, like we normally do.</span>
+        child = next = primaryChild
+      }
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-comment">// The current tree has not already timed out. That means the primary</span>
+      <span class="hljs-comment">// children are not wrapped in a fragment fiber.</span>
+      <span class="hljs-keyword">const</span> currentPrimaryChild: Fiber = (current.child: any)
+      <span class="hljs-keyword">if</span> (nextDidTimeout) {
+        <span class="hljs-comment">// Timed out. Wrap the children in a fragment fiber to keep them</span>
+        <span class="hljs-comment">// separate from the fallback children.</span>
+        <span class="hljs-keyword">const</span> nextFallbackChildren = nextProps.fallback
+        <span class="hljs-keyword">const</span> primaryChildFragment = createFiberFromFragment(
+          <span class="hljs-comment">// It shouldn&apos;t matter what the pending props are because we aren&apos;t</span>
+          <span class="hljs-comment">// going to render this fragment.</span>
+          <span class="hljs-literal">null</span>,
+          mode,
+          NoWork,
+          <span class="hljs-literal">null</span>,
+        )
+        primaryChildFragment.effectTag |= Placement
+        primaryChildFragment.child = currentPrimaryChild
+        currentPrimaryChild.return = primaryChildFragment
+        <span class="hljs-comment">// Create a fragment from the fallback children, too.</span>
+        <span class="hljs-keyword">const</span> fallbackChildFragment = (primaryChildFragment.sibling = createFiberFromFragment(
+          nextFallbackChildren,
+          mode,
+          renderExpirationTime,
+          <span class="hljs-literal">null</span>,
+        ))
+        fallbackChildFragment.effectTag |= Placement
+        child = primaryChildFragment
+        primaryChildFragment.childExpirationTime = NoWork
+        <span class="hljs-comment">// Skip the primary children, and continue working on the</span>
+        <span class="hljs-comment">// fallback children.</span>
+        next = fallbackChildFragment
+        child.return = next.return = workInProgress
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// Still haven&apos;t timed out.  Continue rendering the children, like we</span>
+        <span class="hljs-comment">// normally do.</span>
+        <span class="hljs-keyword">const</span> nextPrimaryChildren = nextProps.children
+        next = child = reconcileChildFibers(
+          workInProgress,
+          currentPrimaryChild,
+          nextPrimaryChildren,
+          renderExpirationTime,
+        )
+      }
+    }
+  }
+
+  workInProgress.memoizedState = nextState
+  workInProgress.child = child
+  <span class="hljs-keyword">return</span> next
+}
+</code></pre>
+</div></div></div>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+<div id="QR" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin: 20px; margin-top: 40px; padding-top: 20px; border: 2px solid #ea8;">
+  <img
+    src="https://static.coursebetter.com/202112/Jokcy%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81.png"
+    alt="Jokcy的二维码"
+    width="200px"
+  />
+  <p style="padding: 20px; font-size: 16px; color: #d81665; font-weight: bold;">
+    扫码添加Jokcy，更多更新更优质的前端学习内容不断更新中，期待与你一起成长！
+  </p>
+</div>
+<div style="position: fixed; right: 0; bottom: 100px; cursor: pointer; width: 60px; background-color: #fff;" id="floatQR">
+  <p id="qr-text" style="padding: 20px; font-size: 12px; color: #d81665; font-weight: bold; display: none; margin: 0; padding: 3px 10px;">
+    扫码添加Jokcy，更多更新更优质的前端学习内容不断更新中，期待与你一起成长！
+  </p>
+  <img
+    src="https://static.coursebetter.com/202112/Jokcy%E7%9A%84%E4%BA%8C%E7%BB%B4%E7%A0%81.png"
+    alt="Jokcy的二维码"
+    width="100%"
+  />
+</div>
+
+<script>
+  let timer
+    document.querySelector('#floatQR').addEventListener('mouseover', () => {
+      $('#floatQR').animate({
+        width: '300px'
+      })
+      timer = setTimeout(() => {
+        $('#qr-text').show()
+      }, 600)
+    })
+
+    document.querySelector('#floatQR').addEventListener('mouseleave', () => {
+      clearTimeout(timer)
+      $('#floatQR').animate({
+        width: '60px'
+      })
+      $('#qr-text').hide()
+    })
+</script>
+
+                        </div>
+                    </div>
+                
+<div id="disqus_thread"></div>
+<script>
+  /**
+   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+  /*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+  ;(function() {
+    // DON'T EDIT BELOW THIS LINE
+    var d = document,
+      s = d.createElement('script')
+    s.src = 'https://react-source-code.disqus.com/embed.js'
+    s.setAttribute('data-timestamp', +new Date())
+    ;(d.head || d.body).appendChild(s)
+  })()
+</script>
+<noscript
+  >Please enable JavaScript to view the
+  <a href="https://disqus.com/?ref_noscript"
+    >comments powered by Disqus.</a
+  ></noscript
+>
+
+            </div>
+
+            
+
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Suspense","level":"1.6.8","depth":2,"next":{"title":"挂起任务的含义","level":"1.6.9","depth":2,"path":"book/features/suspense.md","ref":"book/features/suspense.md","articles":[]},"previous":{"title":"事件对象生成","level":"1.6.7","depth":2,"path":"book/features/event-create-event-object.md","ref":"book/features/event-create-event-object.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-api"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":true,"instapaper":false,"vk":false,"all":["weibo","google","twitter","weibo","instapaper"]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-api":{"languages":[],"split":true,"theme":"light"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React源码解析","language":"zh-hans","gitbook":"*"},"file":{"path":"book/features/Suspense-component.md","mtime":"2023-08-03T04:41:57.879Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-08-03T05:35:59.106Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+
